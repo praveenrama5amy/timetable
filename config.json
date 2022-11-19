@@ -1,0 +1,10 @@
+{
+    "http" : 80,
+    "https" : 443,
+    "directories":{
+        "organisations" : "organisation",
+        "recycleBin":"recycle-bin",
+        "tutors" : "tutors.json",
+        "classes" : "classes.json"
+    }
+}
