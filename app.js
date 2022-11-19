@@ -15,7 +15,7 @@ const {createOrganisation, getOrganisations, createClasses, createTutor, deleteO
 const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
 const organisations = require("./app/organisation")
 
-// open(`http://localhost:${config.http}`)
+open(`http://localhost:${config.http}`)
 
 const app = express()
 app.set("view engine", "ejs")
