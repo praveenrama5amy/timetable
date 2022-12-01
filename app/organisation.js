@@ -106,10 +106,34 @@ var createTutor = (organisationName) => {
 var createClasses = (organisationName) => {
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,"[]")
 }
-
+var addClass = (organisationName,className) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.errCode && organisation.errCode == 2){
+        return organisation
+    }
+    let classes = organisation.classes;
+    console.log(classes.find(e=>{return e.name == className}));
+    if(classes.find(e=>{return e.name == className})){
+        return{
+            errCode : 3,
+            error : "Class Already Exist In The Organisation"
+        };
+    }
+    classes.push({name : className})
+    setClass(organisationName, classes)
+}
+var setClass = (organisationName , classes) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.errCode && organisation.errCode == 2){
+        return organisation
+    }
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,JSON.stringify(classes))
+}
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
 module.exports.deleteOrganisation = deleteOrganisation;
 module.exports.restoreOrganisation = restoreOrganisation;
 module.exports.createClasses = createClasses;
 module.exports.createTutor = createTutor;
+module.exports.addClass = addClass;
+module.exports.setClass = setClass;

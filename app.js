@@ -9,13 +9,13 @@ const cookieParser = require('cookie-parser')
 
 
 require("./app/setup").setup();
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation} = require("./app/organisation")
+const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass} = require("./app/organisation")
 
 
 const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
 const organisations = require("./app/organisation")
 
-open(`http://localhost:${config.http}`)
+// open(`http://localhost:${config.http}`)
 
 const app = express()
 app.set("view engine", "ejs")
@@ -25,8 +25,8 @@ app.use(urlencoded({extended:false}))
 app.use(text())
 
 app.use(cookieParser())
-const xhttp = http.createServer(app).listen(config.http)
-const xhttps = https.createServer(app).listen(config.https)
+const xhttp = http.createServer(app).listen(config.http,()=>{console.log(`Http Server Running on Port : ${config.http}`)})
+const xhttps = https.createServer(app).listen(config.https,()=>{console.log(`Https Server Running on Port : ${config.https}`)})
 app.get("/",(req,res)=>{
     let organisations = getOrganisations()
     res.render("home",{
@@ -40,4 +40,60 @@ app.post("/addOrganisation",(req,res)=>{
 app.post("/deleteOrganisation", (req,res)=>{
     req.body.name = (req.body.name).toLowerCase();
     res.send(deleteOrganisation(req.body.name));
+})
+app.get("/organisation/:name",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.render("organisation",{
+        title : organisation.name
+    })
+})
+app.get("/organisation/:name/classes",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.render("classes",{
+        organisation,
+        classes : organisation.classes
+    })
+})
+app.get("/organisation/:name/tutors",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.render("tutors")
+})
+app.get("/organisation/:name/subjects",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.render("subjects")
+})
+app.post("/organisation/:name/addClass",(req,res)=>{
+    console.log(req.body);
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    if(addClass(req.params.name,req.body.name)){
+        res.send(addClass(req.params.name,req.body.name)).status(403)
+    }
+    else{
+        res.sendStatus(200)
+    }
 })
