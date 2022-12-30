@@ -7,12 +7,14 @@ var createOrganisation = (name) => {
     if(organisations.includes(name) || oldOrganisations.includes(name)){
         return {
             error : "Organisation Already Exists",
-            errCode : 1
+            code : 1
         }
     }
     fs.mkdirSync(`./data/${config.directories.organisations}/${name}`)
     createTutor(name)
     createClasses(name)
+    createGeneralConfig(name)
+    createTimeTable(name)
     return {
         res : "Organisation Created",
         resCode : 200
@@ -23,10 +25,13 @@ var getOrganisations = (name) => {
         let organisationsFiles =  fs.readdirSync(`./data/${config.directories.organisations}`)
         let organisations = [];
         organisationsFiles.forEach(e=>{
+            createMissingFiles(e)
             organisations.push({
                 name : e,
+                general : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.general}`,{encoding:"utf8"})),
                 tutors : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.tutors}`,{encoding:"utf8"})),
-                classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.classes}`,{encoding:"utf8"})) 
+                classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.classes}`,{encoding:"utf8"})),
+                timetable : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.timetable}`,{encoding:"utf8"})),
             })
         })
         return organisations;
@@ -35,20 +40,17 @@ var getOrganisations = (name) => {
     if(!organisations.includes(name)){
         return {
             error : "Organisation Not Found",
-            errCode : 2
+            code : 2
         }
     }
     let files = fs.readdirSync(`./data/${config.directories.organisations}/${name}`)
-    if(!files.includes(`${config.directories.tutors}`)){
-        createTutor(name)
-    }
-    if(!files.includes(`${config.directories.classes}`)){
-        createClasses(name)
-    }
+    createMissingFiles(name)
     let organisation = {
         name : name,
+        general : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.general}`,{encoding:"utf8"})),
         tutors : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.tutors}`,{encoding:"utf8"})),
-        classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.classes}`,{encoding:"utf8"}))
+        classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.classes}`,{encoding:"utf8"})),
+        timetable : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.timetable}`,{encoding:"utf8"}))
     }
     return organisation;
 }
@@ -57,7 +59,7 @@ var deleteOrganisation = (name) => {
     if(!organisations.includes(name)){
         return {
             error : "Organisation Not Found",
-            errCode : 2
+            code : 2
         }
     }
 
@@ -84,13 +86,13 @@ var restoreOrganisation = (name) => {
     if(!backedUpOrganisations.includes(name)){
         return{
             error : "No Organisations Found",
-            errCode : 2
+            code : 2
         }
     }
     if(organisations.includes(name)){
         return{
             error : "Organisations Already Found",
-            errCode : 1
+            code : 1
         }
     }
     fs.mkdirSync(`./data/${config.directories.organisations}/${name}`)
@@ -106,16 +108,39 @@ var createTutor = (organisationName) => {
 var createClasses = (organisationName) => {
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,"[]")
 }
+var createGeneralConfig = (organisationName) => {
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.general}`,`{
+        "hoursPerDay" : 6,
+        "daysPerWeek" : 5
+    }`)
+}
+var createTimeTable = (organisationName) => {
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,`{}`)
+}
+var createMissingFiles = (organisationName) => {
+    let files = fs.readdirSync(`./data/${config.directories.organisations}/${organisationName}`)
+    if(!files.includes(`${config.directories.tutors}`)){
+        createTutor(organisationName)
+    }
+    if(!files.includes(`${config.directories.classes}`)){
+        createClasses(organisationName)
+    }
+    if(!files.includes(`${config.directories.general}`)){
+        createGeneralConfig(organisationName)
+    }
+    if(!files.includes(`${config.directories.timetable}`)){
+        createTimeTable(organisationName)
+    }
+}
 var addClass = (organisationName,className) => {
     let organisation = getOrganisations(organisationName);
-    if(organisation.errCode && organisation.errCode == 2){
+    if(organisation.code && organisation.code == 2){
         return organisation
     }
     let classes = organisation.classes;
-    console.log(classes.find(e=>{return e.name == className}));
     if(classes.find(e=>{return e.name == className})){
         return{
-            errCode : 3,
+            code : 3,
             error : "Class Already Exist In The Organisation"
         };
     }
@@ -124,10 +149,57 @@ var addClass = (organisationName,className) => {
 }
 var setClass = (organisationName , classes) => {
     let organisation = getOrganisations(organisationName);
-    if(organisation.errCode && organisation.errCode == 2){
+    if(organisation.code && organisation.code == 2){
         return organisation
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,JSON.stringify(classes))
+}
+var setHour = (organisationName, className, day, hour, hourName) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    let timetable = organisation.timetable;
+    let classes = organisation.classes;
+    let clas = classes.find(e=>{return e.name == className})
+    if(clas == null){
+        return{code:404,error:"Class Not Found"};
+    }
+    let subjects = clas.subjects;
+    if(subjects.find(e=>{return e.name == hourName})){
+        if(timetable[className] == null){
+            timetable[className] = {};
+        }
+        if(timetable[className][`day${day}`] == null){
+            timetable[className][`day${day}`] = {};
+        }
+        timetable[className][`day${day}`][`hour${hour}`] = hourName
+        fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
+        return{
+            code : 200, message : "Hour Set"
+        }
+    }
+    else{
+        return{code:404,error:"Subject Not Found"}
+    }
+}
+var deleteHour = (organisationName, className, day, hour) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    let timetable = organisation.timetable;
+    let classes = organisation.classes;
+    let clas = classes.find(e=>{return e.name == className})
+    if(clas == null){
+        return{code:404,error:"Class Not Found"};
+    }
+    let subjects = clas.subjects;
+    timetable[className][`day${day}`][`hour${hour}`] = null
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
+    return{
+        code : 200, message : "Hour Deleted"
+    }
 }
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
@@ -137,3 +209,5 @@ module.exports.createClasses = createClasses;
 module.exports.createTutor = createTutor;
 module.exports.addClass = addClass;
 module.exports.setClass = setClass;
+module.exports.setHour = setHour;
+module.exports.deleteHour = deleteHour;

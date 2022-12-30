@@ -86,7 +86,7 @@
         }
         let res = await ajax("/addOrganisation","POST",{name})
         console.log(res);
-        if(res.error && res.errCode == "1"){
+        if(res.error && res.code == "1"){
             alert("Organisation Already Exists")
             return;
         }

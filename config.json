@@ -5,6 +5,8 @@
         "organisations" : "organisation",
         "recycleBin":"recycle-bin",
         "tutors" : "tutors.json",
-        "classes" : "classes.json"
+        "classes" : "classes.json",
+        "general" : "general.json",
+        "timetable" : "timetable.json"
     }
 }

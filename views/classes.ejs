@@ -80,6 +80,10 @@
     <script>
         function addClass(){
             let className = document.getElementById("className").value;
+            if(className == null || className == ""){
+                // alert("Class Name can't be Empty")
+                return;
+            }
             document.getElementById("className").value = "";
             let location = document.getElementById("classAddForm").getAttribute("action")
             let xhttp = new XMLHttpRequest();
@@ -128,7 +132,7 @@
             }
             else{
                 return({
-                    errCode:404,
+                    code:404,
                     error : "Class Not Found"
                 })
             }

@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser')
 
 
 require("./app/setup").setup();
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass} = require("./app/organisation")
+const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour} = require("./app/organisation")
 
 
 const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
@@ -83,7 +83,6 @@ app.get("/organisation/:name/subjects",(req,res)=>{
     res.render("subjects")
 })
 app.post("/organisation/:name/addClass",(req,res)=>{
-    console.log(req.body);
     let organisations = getOrganisations()
     if(!organisations.find(e=>{return e.name == req.params.name})){
         res.render("organNotFound")
@@ -96,4 +95,19 @@ app.post("/organisation/:name/addClass",(req,res)=>{
     else{
         res.sendStatus(200)
     }
+})
+app.get("/timetable/:name/",async(req,res)=>{
+    let organisation = getOrganisations(req.params.name)
+    if(organisation.code == 2){
+        res.render("organNotFound.ejs");
+        return;
+    }
+    console.log(organisation);
+    res.render("timetable",{
+        organisation
+    })
+}).post("/timetable/setHour",async(req,res)=>{
+    res.send(setHour(req.body.organ,req.body.class,req.body.day,req.body.hour,req.body.hourName))
+}).post("/timetable/deleteHour",async(req,res)=>{
+    res.send(deleteHour(req.body.organ,req.body.class,req.body.day,req.body.hour))
 })
