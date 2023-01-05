@@ -1,32 +1,52 @@
 [
     {
         "name": "I-BCA-A",
-        "subjects" : [
+        "subjects": [
             {
-                "name" : "Maths",
-                "minimumHours" : 10,
-                "maximumHours" : 15,
+                "name": "Maths",
+                "minimumHours": 10,
+                "maximumHours": 15,
                 "tutor": "murugesan"
             },
             {
-                "name" : "English",
-                "minimumHours" : 9,
-                "maximumHours" : 10,
+                "name": "English",
+                "minimumHours": 9,
+                "maximumHours": 10,
                 "tutor": "Uma"
             }
         ]
-
     },
     {
-        "name": "I-BCA-B"
+        "name": "I-BCA-B",
+        "subjects": [
+            {
+                "name": "Maths",
+                "minimumHours": 10,
+                "maximumHours": 15,
+                "tutor": "murugesan"
+            },
+            {
+                "name": "Tamil",
+                "minimumHours": 9,
+                "maximumHours": 10,
+                "tutor": "Uma"
+            }
+        ]
     },
     {
-        "name": "I-BCA-C"
+        "name": "I-BCA-C",
+        "subjects": []
     },
     {
-        "name": "I-BCA-D"
+        "name": "I-BCA-D",
+        "subjects": []
     },
     {
-        "name": "I-BCA-E"
+        "name": "I-BCA-E",
+        "subjects": []
+    },
+    {
+        "name": "II-BCA-A",
+        "subjects": []
     }
 ]

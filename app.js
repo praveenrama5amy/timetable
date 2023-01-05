@@ -80,7 +80,25 @@ app.get("/organisation/:name/subjects",(req,res)=>{
         return;
     }
     let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("subjects")
+    let subjects = [];
+    organisation.classes.forEach(room => {
+        room.subjects.forEach(subject => {
+            if(subjects.find(sub => {return sub.name == subject.name})){
+                let already = subjects.find((sub,i,a) => {return sub.name == subject.name});
+                already.classes.push(room.name)
+            }else{
+                subjects.push({
+                    name : subject.name,
+                    classes : [room.name]
+                })
+            }
+        })
+    });
+    res.render("subjects",{
+        organisation,
+        classes : organisation.classes,
+        subjects
+    })
 })
 app.post("/organisation/:name/addClass",(req,res)=>{
     let organisations = getOrganisations()
@@ -102,7 +120,6 @@ app.get("/timetable/:name/",async(req,res)=>{
         res.render("organNotFound.ejs");
         return;
     }
-    console.log(organisation);
     res.render("timetable",{
         organisation
     })

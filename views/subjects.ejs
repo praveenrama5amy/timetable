@@ -7,6 +7,11 @@
     <title>Subjects</title>
 </head>
 <body>
-    Subjects
+    <% subjects.forEach(e => { %>
+        <p><%= e.name %></p>
+        <% e.classes.forEach(room => { %>
+            <p><%= room %></p>
+        <% }) %>
+    <% }) %>
 </body>
 </html>

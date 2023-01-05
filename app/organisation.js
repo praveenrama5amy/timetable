@@ -68,7 +68,6 @@ var deleteOrganisation = (name) => {
     }
     fs.mkdirSync(`./data/${config.directories.recycleBin}/${name}`);
     let files = fs.readdirSync(`./data/${config.directories.organisations}/${name}` ,{withFileTypes : true})
-    console.log(files);
     files.forEach(e=>{
         if(e.isFile()){
             fs.copyFileSync(`./data/${config.directories.organisations}/${name}/${e.name}`,`./data/${config.directories.recycleBin}/${name}/${e.name}`)
@@ -106,7 +105,7 @@ var createTutor = (organisationName) => {
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.tutors}`,"[]")
 }
 var createClasses = (organisationName) => {
-    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,"[]")
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`, "[]")
 }
 var createGeneralConfig = (organisationName) => {
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.general}`,`{
@@ -144,7 +143,7 @@ var addClass = (organisationName,className) => {
             error : "Class Already Exist In The Organisation"
         };
     }
-    classes.push({name : className})
+    classes.push({name : className,subjects : []})
     setClass(organisationName, classes)
 }
 var setClass = (organisationName , classes) => {
