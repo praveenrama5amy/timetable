@@ -5,43 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subjects</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
-        .subjects{
-            margin: 10px;
-        }
         .subject{
-            padding: 15px 10px;
-            text-align: center;
+            border: solid black 2px;
             margin: 10px;
-            border-radius: 5px;
-            border: solid black 1px;
-            font-weight: bold;
+            padding: 10px;
             display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
             flex-direction: column;
         }
-        .subject .header{
-            display: flex;
+        .subject .dropdown-btn{
             align-items: center;
-            justify-content: center;
+            display: flex;
+        }
+        .subject .dropdown-btn :first-child{
+            flex: 1;
+        }
+        .dropdown{
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="subjects">
-        <% subjects.forEach(e => { %>
-            <div class="subject">
-                <div class="header">
-                    <%= e.name %>
-                    <span class="material-symbols-outlined">expand_more</span>
-                </div>
-                <div class="content">
-                    
-                </div>
+    <% subjects.forEach(subject => { %>
+        <div class="subject">
+            <div class="dropdown-btn">
+                <p><%= subject.name %></p>
+                <span class="material-symbols-outlined">arrow_drop_down</span>
             </div>
-        <% }) %>    
-    </div>
-    <!-- <% subjects.forEach(e => { %>
+            <div class="dropdown">
+                hello
+            </div>
+        </div>
+    <% }) %>
+    <% subjects.forEach(e => { %>
         <p><%= e.name %></p>
         <% e.classes.forEach(room => { %>
             <p><%= room %></p>
