@@ -72,7 +72,7 @@
             </form>
         </div>
         <% classes.forEach(e => { %>
-            <div class="collection" style="font-weight: bold;">
+            <div class="collection" style="font-weight: bold;" id="<%= e.name %>" onclick="openClass(this)">
                 <%= e.name %>
             </div>
         <% }) %>
@@ -106,6 +106,8 @@
             e.className = "collection"
             e.style = "font-weight:bold;"
             e.innerHTML = className;
+            e.id = className;
+            e.setAttribute("onclick","openClass(this)")
             parent.appendChild(e)
         }
         function setClassToDom(classNames){
@@ -119,6 +121,8 @@
                 e.className = "collection"
                 e.style = "font-weight:bold;"
                 e.innerHTML = element;
+                e.id = className;
+                e.setAttribute("onclick","openClass(this)")
                 parent.appendChild(e)
             })
         }
@@ -138,6 +142,10 @@
             }
             // let parent = document.querySelector(".collections");
         }
+        function openClass(className){
+            location.assign(`/timetable/`)
+        }
+        addClassToDom("III-BCA-C")
     </script>
 </body>
 </html>

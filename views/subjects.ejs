@@ -5,13 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subjects</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .subjects{
+            margin: 10px;
+        }
+        .subject{
+            padding: 15px 10px;
+            text-align: center;
+            margin: 10px;
+            border-radius: 5px;
+            border: solid black 1px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+        }
+        .subject .header{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-    <% subjects.forEach(e => { %>
+    <div class="subjects">
+        <% subjects.forEach(e => { %>
+            <div class="subject">
+                <div class="header">
+                    <%= e.name %>
+                    <span class="material-symbols-outlined">expand_more</span>
+                </div>
+                <div class="content">
+                    
+                </div>
+            </div>
+        <% }) %>    
+    </div>
+    <!-- <% subjects.forEach(e => { %>
         <p><%= e.name %></p>
         <% e.classes.forEach(room => { %>
             <p><%= room %></p>
         <% }) %>
-    <% }) %>
+    <% }) %> -->
 </body>
 </html>
