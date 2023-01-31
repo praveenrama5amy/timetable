@@ -29,6 +29,7 @@ var getOrganisations = (name) => {
             organisations.push({
                 name : e,
                 general : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.general}`,{encoding:"utf8"})),
+                subjects : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.subjects}`,{encoding:"utf8"})),
                 tutors : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.tutors}`,{encoding:"utf8"})),
                 classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.classes}`,{encoding:"utf8"})),
                 timetable : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${e}/${config.directories.timetable}`,{encoding:"utf8"})),
@@ -48,6 +49,7 @@ var getOrganisations = (name) => {
     let organisation = {
         name : name,
         general : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.general}`,{encoding:"utf8"})),
+        subjects : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.subjects}`,{encoding:"utf8"})),
         tutors : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.tutors}`,{encoding:"utf8"})),
         classes : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.classes}`,{encoding:"utf8"})),
         timetable : JSON.parse(fs.readFileSync(`./data/${config.directories.organisations}/${name}/${config.directories.timetable}`,{encoding:"utf8"}))
@@ -101,6 +103,9 @@ var restoreOrganisation = (name) => {
     })
     fs.rmSync(`./data/${config.directories.recycleBin}/${name}`,{force:true ,recursive:true})
 }
+var createSubjects = (organisationName) => {
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.subjects}`,"[]")
+}
 var createTutor = (organisationName) => {
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.tutors}`,"[]")
 }
@@ -118,6 +123,9 @@ var createTimeTable = (organisationName) => {
 }
 var createMissingFiles = (organisationName) => {
     let files = fs.readdirSync(`./data/${config.directories.organisations}/${organisationName}`)
+    if(!files.includes(`${config.directories.subjects}`)){
+        createSubjects(organisationName)
+    }
     if(!files.includes(`${config.directories.tutors}`)){
         createTutor(organisationName)
     }

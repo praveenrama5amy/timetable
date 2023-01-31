@@ -4,6 +4,7 @@
     "directories":{
         "organisations" : "organisation",
         "recycleBin":"recycle-bin",
+        "subjects" : "subjects.json",
         "tutors" : "tutors.json",
         "classes" : "classes.json",
         "general" : "general.json",

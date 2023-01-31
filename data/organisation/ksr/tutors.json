@@ -1,1 +1,74 @@
-[]
+[
+    {
+        "name" : "Uma",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "COA"
+        ]
+    },
+    {
+        "name" : "Jayabharathi",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "C++"
+        ]
+    },
+    {
+        "name" : "Sabari",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "ENG"
+        ]
+    },
+    {
+        "name" : "Praveen",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "TAM"
+        ]
+    },
+    {
+        "name" : "Myvizhi",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "EVS"
+        ]
+    },
+    {
+        "name" : "Abirami",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "PE II"
+        ]
+    },
+    {
+        "name" : "Sujatha",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "MAT"
+        ]
+    },
+    {
+        "name" : "Jayabharathi",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "C++ PRAC"
+        ]
+    },
+    {
+        "name" : "Sathyamoorthi",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "DT PRAC"
+        ]
+    }
+]

@@ -74,9 +74,10 @@
     </h1>
     <div class="pages">
         <div class="buttons">
-            <button location="/organisation/<%= title %>/Classes" onclick="changePage(this)"><span class="material-symbols-outlined">meeting_room</span>Classes</button>
             <button location="/organisation/<%= title %>/Subjects" onclick="changePage(this)"><span class="material-symbols-outlined">menu_book</span>Subjects</button>
             <button location="/organisation/<%= title %>/Tutors" onclick="changePage(this)"><span class="material-symbols-outlined">groups</span>Tutors</button>
+            <button location="/organisation/<%= title %>/Classes" onclick="changePage(this)"><span class="material-symbols-outlined">meeting_room</span>Classes</button>
+            <button location="/organisation/<%= title %>/summary" onclick="changePage(this)"><span class="material-symbols-outlined">meeting_room</span>Summary</button>
         </div>
         <div class="page">
             <embed id="page" src="/organisation/<%= title %>/Classes" type="text/html" style="height: 100%;width:100%;">

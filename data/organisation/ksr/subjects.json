@@ -1,0 +1,47 @@
+[
+    {
+        "name" : "TAM",
+        "minimumHours" : 4,
+        "maximumHours" : 5
+    },
+    {
+        "name" : "ENG",
+        "minimumHours" : 4,
+        "maximumHours" : 5
+    },
+    {
+        "name" : "C++",
+        "minimumHours" : 3,
+        "maximumHours" : 3
+    },
+    {
+        "name" : "COA",
+        "minimumHours" : 3,
+        "maximumHours" : 3
+    },
+    {
+        "name" : "MAT",
+        "minimumHours" : 4,
+        "maximumHours" : 4
+    },
+    {
+        "name" : "C++ PRAC",
+        "minimumHours" : 2,
+        "maximumHours" : 2
+    },
+    {
+        "name" : "DT PRAC",
+        "minimumHours" : 2,
+        "maximumHours" : 2
+    },
+    {
+        "name" : "PE II",
+        "minimumHours" : 3,
+        "maximumHours" : 3
+    },
+    {
+        "name" : "EVS",
+        "minimumHours" : 2,
+        "maximumHours" : 2
+    }
+]

@@ -4,14 +4,10 @@
         "subjects": [
             {
                 "name": "Maths",
-                "minimumHours": 10,
-                "maximumHours": 15,
-                "tutor": "murugesan"
+                "tutor": "Uma"
             },
             {
                 "name": "English",
-                "minimumHours": 9,
-                "maximumHours": 10,
                 "tutor": "Uma"
             }
         ]
@@ -21,32 +17,51 @@
         "subjects": [
             {
                 "name": "Maths",
-                "minimumHours": 10,
-                "maximumHours": 15,
-                "tutor": "murugesan"
+                "tutor": "Uma"
             },
             {
                 "name": "Tamil",
-                "minimumHours": 9,
-                "maximumHours": 10,
-                "tutor": "Uma"
+                "tutor": "Murukku"
             }
         ]
     },
     {
         "name": "I-BCA-C",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "Maths",
+                "tutor": "Uma"
+            },
+            {
+                "name": "Tamil",
+                "tutor": "Murukku"
+            }
+        ]
     },
     {
         "name": "I-BCA-D",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "Maths",
+                "tutor": "Uma"
+            },
+            {
+                "name": "Tamil",
+                "tutor": "Murukku"
+            }
+        ]
     },
     {
         "name": "I-BCA-E",
-        "subjects": []
-    },
-    {
-        "name": "II-BCA-A",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "Tamil",
+                "tutor": "Murukku"
+            },
+            {
+                "name": "English",
+                "tutor": "Uma"
+            }
+        ]
     }
 ]

@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser')
 
 require("./app/setup").setup();
 const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour} = require("./app/organisation")
+const summary = require("./app/summary")
 
 
 const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
@@ -71,7 +72,11 @@ app.get("/organisation/:name/tutors",(req,res)=>{
         return;
     }
     let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("tutors")
+    res.render("tutors",{
+        organisation,
+        tutors : organisation.tutors,
+        subjects : organisation.subjects
+    })
 })
 app.get("/organisation/:name/subjects",(req,res)=>{
     let organisations = getOrganisations()
@@ -94,10 +99,26 @@ app.get("/organisation/:name/subjects",(req,res)=>{
             }
         })
     });
+    console.log(organisation.subjects);
     res.render("subjects",{
         organisation,
         classes : organisation.classes,
-        subjects
+        subjects : organisation.subjects
+    })
+})
+app.get("/organisation/:name/summary",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.render("summary",{
+        organisation,
+        tutors : organisation.tutors,
+        subjects : organisation.subjects,
+        classes : organisation.classes,
+        general : organisation.general
     })
 })
 app.post("/organisation/:name/addClass",(req,res)=>{
