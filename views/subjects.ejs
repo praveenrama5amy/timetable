@@ -19,6 +19,7 @@
         .subject .dropdown-btn{
             align-items: center;
             display: flex;
+            cursor: pointer;
         }
         .subject .dropdown-btn :first-child{
             flex: 1;
@@ -26,25 +27,33 @@
         .dropdown{
             display: none;
         }
+        .dropdown-content{
+            display: none;
+        }
     </style>
 </head>
 <body>
     <% subjects.forEach(subject => { %>
         <div class="subject">
-            <div class="dropdown-btn">
+            <div class="dropdown-btn" onclick="dropdown(this)">
                 <p><%= subject.name %></p>
                 <span class="material-symbols-outlined">arrow_drop_down</span>
             </div>
-            <div class="dropdown">
+            <div class="dropdown-content">
                 hello
             </div>
         </div>
     <% }) %>
-    <% subjects.forEach(e => { %>
-        <p><%= e.name %></p>
-        <% e.classes.forEach(room => { %>
-            <p><%= room %></p>
-        <% }) %>
-    <% }) %> -->
+    <script>
+        function dropdown(e){
+            let parent = e.parentElement;
+            let dropdownContent = parent.getElementsByClassName("dropdown-content")[0]
+            if(dropdownContent.style.display == "none" || dropdownContent.style.display == ""){
+                dropdownContent.style.display == "block"
+            }else{
+                dropdownContent.style.display == "none"
+            }
+        }
+    </script>
 </body>
 </html>
