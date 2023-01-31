@@ -40,18 +40,20 @@
                 <span class="material-symbols-outlined">arrow_drop_down</span>
             </div>
             <div class="dropdown-content">
-                hello
+                <% subject.classes.forEach(classRoom => { %>
+                    <p><%= classRoom %></p>
+                <% }) %>
             </div>
         </div>
     <% }) %>
     <script>
         function dropdown(e){
             let parent = e.parentElement;
-            let dropdownContent = parent.getElementsByClassName("dropdown-content")[0]
+            let dropdownContent = parent.getElementsByClassName("dropdown-content")[0];
             if(dropdownContent.style.display == "none" || dropdownContent.style.display == ""){
-                dropdownContent.style.display == "block"
+                dropdownContent.style.display = "block"
             }else{
-                dropdownContent.style.display == "none"
+                dropdownContent.style.display = "none"
             }
         }
     </script>
