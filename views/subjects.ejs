@@ -37,15 +37,50 @@
         .subject .dropdown-btn :first-child{
             flex: 1;
         }
-        .dropdown{
-            display: none;
+        .form{
+            padding: 20px;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .form input[type="text"]{
+            padding: 10px;
+            width: 80%;
+            margin: 5px;
         }
         .dropdown-content{
             display: none;
         }
+        .newSubjectTutors{
+            width: 75%;
+        }
     </style>
 </head>
 <body>
+    <div class="form">
+        <div class="dropdown-btn" onclick="dropdown(this)" style="display: flex;align-content: center;justify-content: center;">
+            <button style="display: flex;justify-content: center;align-items: center;cursor: pointer;width: 100%;padding: 10px;">ADD
+                <span class="material-symbols-outlined">add</span></button>
+        </div>
+        <div class="dropdown-content">
+            <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+                <input type="text" name="subjectName" id="subjectName" placeholder="Subject Name" title="Enter The Name Of the Subject">
+                <input type="text" name="minimumHours" id="minimumHours" placeholder="Minimum Hours" title="Enter Minimum Hours should be alloted to every class">
+                <input type="text" name="maximumHours" id="maximumHours" placeholder="Maximum Hours" title="Enter Maximum Hours can be alloted to a Class">
+                <div class="newSubjectTutors">
+                    <p>Tutors taking this Subject:</p>
+                    <% tutors.forEach(tutor => { %>
+                        <div style="display: flex;align-items: center;padding: 3px;">
+                            <input type="checkbox" name="<%= tutor.name %>" id="<%= tutor.name %>" style="cursor: pointer;width: 25px;height: 25px;">
+                            <label for="<%= tutor.name %>" style="cursor: pointer;"><%= tutor.name %></label>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
     <% subjects.forEach(subject => { %>
         <div class="subject">
             <div class="dropdown-btn" onclick="dropdown(this)">

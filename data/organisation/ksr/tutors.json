@@ -8,15 +8,41 @@
         ]
     },
     {
+        "name" : "Bhuma",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "COA"
+        ]
+    },
+    {
         "name" : "Jayabharathi",
         "minimumHours" : 0,
         "maximumHours" : 16,
         "subjects" : [
-            "C++"
+            "C++",
+            "C++ PRAC"
+        ]
+    },
+    {
+        "name" : "Kousalya",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "C++",
+            "C++ PRAC"
         ]
     },
     {
         "name" : "Sabari",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "ENG"
+        ]
+    },
+    {
+        "name" : "Sharmila",
         "minimumHours" : 0,
         "maximumHours" : 16,
         "subjects" : [
@@ -56,15 +82,32 @@
         ]
     },
     {
-        "name" : "Jayabharathi",
+        "name" : "Deepa",
         "minimumHours" : 0,
         "maximumHours" : 16,
         "subjects" : [
-            "C++ PRAC"
+            "MAT"
         ]
     },
     {
         "name" : "Sathyamoorthi",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "DT PRAC",
+            "EVS"
+        ]
+    },
+    {
+        "name" : "Arunraja",
+        "minimumHours" : 0,
+        "maximumHours" : 16,
+        "subjects" : [
+            "MAT"
+        ]
+    },
+    {
+        "name" : "Murukku",
         "minimumHours" : 0,
         "maximumHours" : 16,
         "subjects" : [

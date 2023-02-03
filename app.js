@@ -94,7 +94,7 @@ app.get("/organisation/:name/subjects",(req,res)=>{
             }else{
                 subjects.push({
                     name : subject.name,
-                    classes : [room.name]
+                    classes : [room.name],
                 })
             }
         })
@@ -103,7 +103,8 @@ app.get("/organisation/:name/subjects",(req,res)=>{
     res.render("subjects",{
         organisation,
         classes : organisation.classes,
-        subjects : organisation.subjects
+        subjects : organisation.subjects,
+        tutors : organisation.tutors
     })
 })
 app.get("/organisation/:name/summary",(req,res)=>{

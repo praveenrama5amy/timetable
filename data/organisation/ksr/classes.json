@@ -3,11 +3,11 @@
         "name": "I-BCA-A",
         "subjects": [
             {
-                "name": "Maths",
+                "name": "MAT",
                 "tutor": "Uma"
             },
             {
-                "name": "English",
+                "name": "ENG",
                 "tutor": "Uma"
             }
         ]
@@ -16,11 +16,11 @@
         "name": "I-BCA-B",
         "subjects": [
             {
-                "name": "Maths",
+                "name": "MAT",
                 "tutor": "Uma"
             },
             {
-                "name": "Tamil",
+                "name": "TAM",
                 "tutor": "Murukku"
             }
         ]
@@ -29,11 +29,11 @@
         "name": "I-BCA-C",
         "subjects": [
             {
-                "name": "Maths",
+                "name": "MAT",
                 "tutor": "Uma"
             },
             {
-                "name": "Tamil",
+                "name": "TAM",
                 "tutor": "Murukku"
             }
         ]
@@ -42,11 +42,11 @@
         "name": "I-BCA-D",
         "subjects": [
             {
-                "name": "Maths",
+                "name": "MAT",
                 "tutor": "Uma"
             },
             {
-                "name": "Tamil",
+                "name": "TAM",
                 "tutor": "Murukku"
             }
         ]
@@ -55,12 +55,12 @@
         "name": "I-BCA-E",
         "subjects": [
             {
-                "name": "Tamil",
-                "tutor": "Murukku"
+                "name": "TAM",
+                "tutor": "Praveen"
             },
             {
-                "name": "English",
-                "tutor": "Uma"
+                "name": "ENG",
+                "tutor": "Sharmila"
             }
         ]
     }
