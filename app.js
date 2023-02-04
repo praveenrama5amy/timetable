@@ -7,9 +7,8 @@ const ejs = require("ejs")
 const { json, urlencoded, text } = require('body-parser')
 const cookieParser = require('cookie-parser')
 
-
 require("./app/setup").setup();
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour} = require("./app/organisation")
+const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, addSubject, addTutor, editTutorSubject, editClassSubject} = require("./app/organisation")
 const summary = require("./app/summary")
 
 
@@ -77,6 +76,45 @@ app.get("/organisation/:name/tutors",(req,res)=>{
         tutors : organisation.tutors,
         subjects : organisation.subjects
     })
+}).post("/organisation/:name/addtutor",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    req.body = JSON.parse(req.body)
+    let tutorName = req.body.name;
+    let minimumHours = parseInt(req.body.minimumHours)
+    let maximumHours = parseInt(req.body.maximumHours)
+    let subjects = req.body.subjects;
+    res.send(addTutor(organisation.name,tutorName,minimumHours,maximumHours,subjects));
+}).post("/organisation/:name/editTutorSubject",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    req.body = JSON.parse(req.body)
+    let tutorName = req.body.tutorName;
+    let subjectName = req.body.subjectName;
+    let value = req.body.value;
+    res.send(editTutorSubject(organisation.name,tutorName,subjectName,value))
+    
+}).post("/organisation/:name/editClassSubject",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    req.body = JSON.parse(req.body)
+    let className = req.body.className;
+    let subjectName = req.body.subjectName;
+    let value = req.body.value;
+    res.send(editClassSubject(organisation.name,className,subjectName,value))
+    
 })
 app.get("/organisation/:name/subjects",(req,res)=>{
     let organisations = getOrganisations()
@@ -99,13 +137,32 @@ app.get("/organisation/:name/subjects",(req,res)=>{
             }
         })
     });
-    console.log(organisation.subjects);
+    organisation.tutors.forEach(tutor => {
+        tutor.subjects.forEach(subject => {
+            organisation.subjects.find(sub => sub == subject)
+        })
+    })
+    console.log(subjects);
     res.render("subjects",{
         organisation,
         classes : organisation.classes,
         subjects : organisation.subjects,
         tutors : organisation.tutors
     })
+}).post("/organisation/:name/addsubject",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    req.body = JSON.parse(req.body)
+    let subjectName = req.body.name;
+    let minimumHours = parseInt(req.body.minimumHours)
+    let maximumHours = parseInt(req.body.maximumHours)
+    let tutors = req.body.tutors
+    
+    res.send(addSubject(organisation.name,subjectName,minimumHours,maximumHours,tutors))
 })
 app.get("/organisation/:name/summary",(req,res)=>{
     let organisations = getOrganisations()

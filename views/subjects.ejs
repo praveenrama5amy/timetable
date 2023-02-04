@@ -56,6 +56,14 @@
         .newSubjectTutors{
             width: 75%;
         }
+        input[type = "checkbox"]{
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+        }
+        label{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -70,14 +78,21 @@
                 <input type="text" name="minimumHours" id="minimumHours" placeholder="Minimum Hours" title="Enter Minimum Hours should be alloted to every class">
                 <input type="text" name="maximumHours" id="maximumHours" placeholder="Maximum Hours" title="Enter Maximum Hours can be alloted to a Class">
                 <div class="newSubjectTutors">
-                    <p>Tutors taking this Subject:</p>
-                    <% tutors.forEach(tutor => { %>
+                    <p>For Classes : </p>
+                    <% classes.forEach(room => { %>
                         <div style="display: flex;align-items: center;padding: 3px;">
-                            <input type="checkbox" name="<%= tutor.name %>" id="<%= tutor.name %>" style="cursor: pointer;width: 25px;height: 25px;">
-                            <label for="<%= tutor.name %>" style="cursor: pointer;"><%= tutor.name %></label>
+                            <input type="checkbox" name="subjectClasses" class="subjectClasses" value="<%= room.name %>" id="<%= room.name %>" style="cursor: pointer;width: 25px;height: 25px;">
+                            <label for="<%= room.name %>" style="cursor: pointer;"><%= room.name %></label>
                         </div>
                     <% }) %>
+                    <!-- <% tutors.forEach(tutor => { %>
+                        <div style="display: flex;align-items: center;padding: 3px;">
+                            <input type="checkbox" name="subjectTutors" class="subjectTutors" value="<%= tutor.name %>" id="<%= tutor.name %>" style="cursor: pointer;width: 25px;height: 25px;">
+                            <label for="<%= tutor.name %>" style="cursor: pointer;"><%= tutor.name %></label>
+                        </div>
+                    <% }) %> -->
                 </div>
+                <button style="padding: 10px;cursor: pointer;" onclick="addSubject()">Add</button>
             </div>
         </div>
     </div>
@@ -93,6 +108,26 @@
                 <br>
                 <label for="">Maximum Hours per Class</label>
                 <input type="text" value="<%= subject.maximumHours %>">
+                <h3>For Classes : </h3>
+                <% classes.forEach(room => { %>
+                    <div style="display: flex;align-items: center;">
+                        <input type="checkbox" name="<%= subject.name %>@<%= room.name %>" id="<%= subject.name%>@<%= room.name %>" onchange="editClassSubject(this)" style="cursor:pointer;margin: 3px;"
+                        <% if (subject.classes.includes(room.name)) { %>
+                            checked
+                            <% } %>
+                        >
+                        <label for="<%= subject.name%>@<%= room.name %>"> <%= room.name %></label>
+                    </div>
+                <% }) %>
+                <!-- <% tutors.forEach(tutor => { %>
+                    <br>
+                    <label for="<%= subject.name%>@<%= tutor.name %>"><%= tutor.name %> : </label>
+                    <input type="checkbox" name="<%= subject.name %>@<%= tutor.name %>" id="<%= subject.name%>@<%= tutor.name %>" onchange="editTutorSubjects(this)" style="cursor:pointer;"
+                        <% if (tutor.subjects.includes(subject.name)) { %>
+                            checked
+                        <% } %>
+                    >
+                <% }) %> -->
             </div>
         </div>
     <% }) %>
@@ -104,6 +139,76 @@
                 dropdownContent.style.display = "block"
             }else{
                 dropdownContent.style.display = "none"
+            }
+        }
+        function ajax(url,method,data){
+            return new Promise((resolve)=>{
+                let xhttp = new XMLHttpRequest();
+                xhttp.onload = function(){
+                    resolve(this.responseText)
+                }
+                xhttp.open(method,url);
+                xhttp.send(data);
+            })
+        }
+        async function addSubject(){
+            let name = document.getElementById("subjectName").value
+            let minimumHours = document.getElementById("minimumHours").value
+            let maximumHours = document.getElementById("maximumHours").value
+            let tutorsElements = document.querySelectorAll(".subjectTutors")
+            let tutors = []
+            tutorsElements.forEach(tutor => {
+                if(tutor.checked == true){
+                    tutors.push(tutor.value)
+                }
+            })
+            if(!(name != "" && minimumHours != "" && maximumHours != "" && name != null && minimumHours != null && maximumHours != null)){
+                alert("Fill all the Field")
+                return
+            }
+            let data = {name,minimumHours,maximumHours,tutors}
+            console.log(data);
+            let res = await ajax("addSubject","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            console.log(res);
+            if(res.code == 200){
+                location.reload();
+            }else if(res.error != null){
+                alert(res.error)
+            }else{
+                alert("Something Went Wrong");
+            }
+        }
+        async function editTutorSubjects(element){
+            let subjectName = (element.name.split("@"))[0];
+            let tutorName = (element.name.split("@"))[1];
+            let value = element.checked;
+            let data = {
+                subjectName,
+                tutorName,
+                value
+            }
+            let res = await ajax("editTutorSubject","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            if(res.error != null){
+                alert(res.error)
+                location.reload();
+            }
+        }
+        async function editClassSubject(element){
+            let subjectName = (element.name.split("@"))[0];
+            let className = (element.name.split("@"))[1];
+            let value = element.checked;
+            let data = {
+                subjectName,
+                className,
+                value
+            }
+            let res = await ajax("editClassSubject","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            if(res.error != null){
+                alert(res.error)
+                location.reload();
             }
         }
     </script>

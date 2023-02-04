@@ -1,4 +1,5 @@
 var fs = require("fs");
+const { totalmem } = require("os");
 const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
 
 var createOrganisation = (name) => {
@@ -208,6 +209,164 @@ var deleteHour = (organisationName, className, day, hour) => {
         code : 200, message : "Hour Deleted"
     }
 }
+var setSubject = (organisationName , subjects) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.subjects}`,JSON.stringify(subjects))
+}
+var addSubject = (organisationName, subjectName, minimumHours, maximumHours, tutors) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let subjects = organisation.subjects;
+    let tutorsOld = organisation.tutors;
+    if(subjects.find(subject => {return subject.name == subjectName})){
+        return {error:"Subject Already Exists", code:4};
+    }
+    minimumHours = parseInt(minimumHours);
+    maximumHours = parseInt(maximumHours);
+    let data = {
+        name : subjectName,
+        minimumHours,
+        maximumHours,
+        tutors : [],
+        classes : []
+    }
+    tutors.forEach(tutor => {
+        if(tutorsOld.find(e => e.name == tutor))data.tutors.push(tutor)
+    })
+    subjects.push(data)
+    subjects = subjects.sort(function(a,b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+    });
+    setSubject(organisationName, subjects);
+    if(tutors == null){
+        return{
+            code : 200, message : "Subject Added"
+        }
+    }
+    //adding Tutors
+    tutors.forEach(tutor => {
+        tutor = tutorsOld.find(e => {return e.name == tutor})
+        if(tutor.subjects.includes(subjectName)){
+            return;
+        }
+        tutor.subjects.push(subjectName)
+    })
+    tutorsOld = tutorsOld.sort(function(a,b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+    });
+    setTutor(organisationName, tutorsOld)
+    return{
+        code : 200, message : "Subject Added"
+    }
+}
+var setTutor = (organisationName , tutors) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.tutors}`,JSON.stringify(tutors))
+}
+var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let tutors = organisation.tutors;
+    if(tutors.find(tutor => {return tutor.name == tutorName})){
+        return {error:"Tutor Already Exists", code:5};
+    }
+    minimumHours = parseInt(minimumHours);
+    maximumHours = parseInt(maximumHours);
+    let data = {
+        name : tutorName,
+        minimumHours,
+        maximumHours,
+        subjects : [],
+        classes : []
+    }
+    subjects.forEach(subject => {
+        if(organisation.subjects.find(e => {return e.name == subject})){
+            data.subjects.push(subject)
+        }
+    })
+    tutors.push(data);
+    tutors = tutors.sort(function(a,b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+    });
+    setTutor(organisationName, tutors);
+    return {
+        code : 200, message : "Tutor Added"
+    };
+}
+var editTutorSubject = (organisationName,tutorName,subjectName,value) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let tutors = organisation.tutors;
+    let subjects = organisation.subjects;
+
+    let tutor = tutors.find(tutor => {return tutor.name == tutorName});
+    if(tutor == null)return{error:"Tutor Not Exists", code:404}
+    let subject = subjects.find(subject => {return subject.name == subjectName})
+    if(subject == null)return{error:"Subject Not Exists", code:404}
+    if(value == true && !tutor.subjects.includes(subjectName)){
+        tutor.subjects.push(subjectName);
+    }
+    if(value == true && !subject.tutors.includes(tutorName)){
+        subject.tutors.push(tutorName);
+    }
+    if(value == false && tutor.subjects.includes(subjectName)){
+        tutor.subjects = tutor.subjects.filter(subject => {return subject != subjectName})
+    }
+    if(value == false && subject.tutors.includes(tutorName)){
+        subject.tutors = subject.tutors.filter(tutor => {return tutor != tutorName})
+    }
+    setSubject(organisationName,subjects)
+    setTutor(organisationName,tutors)
+    return{code : 200, message : "Tutor Subject Edited"}
+}
+var editClassSubject = (organisationName,className,subjectName,value) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let tutors = organisation.tutors;
+    let subjects = organisation.subjects;
+    let classes = organisation.classes;
+    let room = classes.find(room => {return room.name == className});
+    if(room == null)return{error:"Class Not Exists", code:404}
+    let subject = subjects.find(subject => {return subject.name == subjectName})
+    if(subject == null)return{error:"Subject Not Exists", code:404}
+    if(value == true && !room.subjects.find(subject => subject.name == subjectName)){
+        room.subjects.push({ name: subjectName, tutors: [] });
+        setClass(organisationName,classes)
+    }
+    if(value == true && !subject.classes.includes(className)){
+        subject.classes.push(className);
+        setSubject(organisationName,subjects)
+    }
+    if(value == false && room.subjects.find(subject => subject.name == subjectName)){
+        room.subjects = room.subjects.filter(subject => {return subject.name != subjectName})
+        setClass(organisationName,classes)
+    }
+    if(value == false && subject.classes.includes(className)){
+        subject.classes = subject.classes.filter(room => {return room != className})
+        setSubject(organisationName,subjects)
+    }
+    return{code : 200, message : "Subject Classes Edited"}
+}
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
 module.exports.deleteOrganisation = deleteOrganisation;
@@ -218,3 +377,56 @@ module.exports.addClass = addClass;
 module.exports.setClass = setClass;
 module.exports.setHour = setHour;
 module.exports.deleteHour = deleteHour;
+module.exports.addSubject = addSubject;
+module.exports.addTutor = addTutor;
+module.exports.editTutorSubject = editTutorSubject;
+module.exports.editClassSubject = editClassSubject;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function script(){
+    let organ = getOrganisations("ksr");
+    let subjects = organ.subjects;
+    let tutors = organ.tutors;
+    subjects.forEach(subject => {
+        subject.tutors = [];
+    })
+    setSubject("ksr",subjects)
+}
+function script2(){
+    let organ = getOrganisations("ksr");
+    let subjects = organ.subjects;
+    let tutors = organ.tutors;
+    subjects.forEach(subject => {
+        let tutor = tutors.filter(tutor => tutor.subjects.includes(subject.name));
+        tutor.forEach(e => {
+            subject.tutors.push(e.name)
+        })
+    })
+    console.log(setSubject("ksr",subjects))
+}

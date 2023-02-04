@@ -43,9 +43,56 @@
         .dropdown-content{
             display: block;
         }
+        .form{
+            padding: 20px;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .form input[type="text"]{
+            padding: 10px;
+            width: 80%;
+            margin: 5px;
+        }
+        /* .dropdown-content{
+            display: none;
+        } */
+        .newtutorSubjects{
+            width: 75%;
+        }
+        input[type = "checkbox"]{
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+        }
     </style>
 </head>
 <body>
+    <div class="form">
+        <div class="dropdown-btn" onclick="dropdown(this)" style="display: flex;align-content: center;justify-content: center;">
+            <button style="display: flex;justify-content: center;align-items: center;cursor: pointer;width: 100%;padding: 10px;">ADD
+                <span class="material-symbols-outlined">add</span></button>
+        </div>
+        <div class="dropdown-content" style="display: none;">
+            <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+                <input type="text" name="tutorName" id="tutorName" placeholder="Tutor Name" title="Enter The Name Of the Tutor">
+                <input type="text" name="minimumHours" id="minimumHours" placeholder="Minimum Hours" title="Enter Minimum Hours that Tutor must have alloted">
+                <input type="text" name="maximumHours" id="maximumHours" placeholder="Maximum Hours" title="Enter Maximum Hours can be alloted to Tutor">
+                <div class="newtutorSubjects">
+                    <p>Subject taking by this Tutor:</p>
+                    <% subjects.forEach(subject => { %>
+                        <div style="display: flex;align-items: center;padding: 3px;">
+                            <input type="checkbox" name="tutorSubjects" class="tutorSubjects" value="<%= subject.name %>" id="<%= subject.name %>">
+                            <label for="<%= subject.name %>" style="cursor: pointer;"><%= subject.name %></label>
+                        </div>
+                    <% }) %>
+                </div>
+                <button style="padding: 10px;cursor: pointer;" onclick="addTutor()">Add</button>
+            </div>
+        </div>
+    </div>
     <% tutors.forEach(tutor => { %>
         <div class="tutor">
             <div class="dropdown-btn" onclick="dropdown(this)">
@@ -60,12 +107,12 @@
                 <input type="text" value="<%= tutor.maximumHours %>">
                 <% subjects.forEach(subject => { %>
                     <br>
-                    <label for="<%= subject.name%>@<%= tutor.name %>"><%= subject.name %> : </label>
-                    <input type="checkbox" name="<%= subject.name %>@<%= tutor.name %>" id="<%= subject.name%>@<%= tutor.name %>" style="cursor:pointer;"
+                    <input type="checkbox" name="<%= subject.name %>@<%= tutor.name %>" id="<%= subject.name%>@<%= tutor.name %>" onchange="editTutorSubjects(this)" style="cursor:pointer;"
                         <% if (tutor.subjects.includes(subject.name)) { %>
                             checked
                         <% } %>
                     >
+                    <label for="<%= subject.name%>@<%= tutor.name %>"> <%= subject.name %></label>
                 <% }) %>
             </div>
         </div>
@@ -78,6 +125,60 @@
                 dropdownContent.style.display = "block"
             }else{
                 dropdownContent.style.display = "none"
+            }
+        }
+        function ajax(url,method,data){
+            return new Promise((resolve)=>{
+                let xhttp = new XMLHttpRequest();
+                xhttp.onload = function(){
+                    resolve(this.responseText)
+                }
+                xhttp.open(method,url);
+                xhttp.send(data);
+            })
+        }
+        async function addTutor(){
+            let name = document.getElementById("tutorName").value
+            let minimumHours = document.getElementById("minimumHours").value
+            let maximumHours = document.getElementById("maximumHours").value
+            let subjectElements = document.querySelectorAll(".tutorSubjects")
+            let subjects = [];
+            subjectElements.forEach(subject => {
+                if(subject.checked == true){
+                    subjects.push(subject.value)
+                }
+            })
+            if(!(name != "" && minimumHours != "" && maximumHours != "" && name != null && minimumHours != null && maximumHours != null)){
+                alert("Fill all the Field")
+                return
+            }
+            let data = {name,minimumHours,maximumHours,subjects}
+            console.log(data);
+            let res = await ajax("addTutor","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            console.log(res);
+            if(res.code == 200){
+                location.reload();
+            }else if(res.error != null){
+                alert(res.error)
+            }else{
+                alert("Something Went Wrong");
+            }
+        }
+        async function editTutorSubjects(element){
+            let subjectName = (element.name.split("@"))[0];
+            let tutorName = (element.name.split("@"))[1];
+            let value = element.checked;
+            let data = {
+                subjectName,
+                tutorName,
+                value
+            }
+            let res = await ajax("editTutorSubject","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            if(res.error != null){
+                alert(res.error)
+                location.reload();
             }
         }
     </script>

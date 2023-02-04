@@ -3,7 +3,7 @@
         "name": "ACC",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": ["III-BCA-C"],
         "tutors": [
             "Balakrishnan"
         ]

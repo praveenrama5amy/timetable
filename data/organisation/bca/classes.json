@@ -1,1 +1,14 @@
-[{"name":"I-BCA-A","subjects":[]},{"name":"I-BCA-B","subjects":[]},{"name":"I-BCA-C","subjects":[]}]
+[
+    {
+        "name": "I-BCA-A",
+        "subjects": []
+    },
+    {
+        "name": "I-BCA-B",
+        "subjects": []
+    },
+    {
+        "name": "I-BCA-C",
+        "subjects": []
+    }
+]

@@ -23,7 +23,7 @@ var checkHourAvailability = (organName) => {
     });
     console.log(allClasses);
 }
-checkHourAvailability("ksr");
+// checkHourAvailability("ksr");
 
 
 module.exports.checkHourAvailability = checkHourAvailability;

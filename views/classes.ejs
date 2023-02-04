@@ -49,10 +49,10 @@
         }
         .classes{
             margin: 10px 5px;
-            display: flex;
+            /* display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
+            flex-direction: column; */
         }
         .class{
             border: solid black 2px;
@@ -92,21 +92,23 @@
             </form>
         </div>
     </div>
-    <% classes.forEach(e => { %>
-        <div class="class">
-            <div class="dropdown-btn" onclick="dropdown(this)">
-                <p><%= e.name %></p>
-                <span class="material-symbols-outlined">arrow_drop_down</span>
+    <div class="classes">
+        <% classes.forEach(e => { %>
+            <div class="class">
+                <div class="dropdown-btn" onclick="dropdown(this)">
+                    <p><%= e.name %></p>
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                </div>
+                <div class="dropdown-content">
+                    <h2>Subjects:</h2>
+                    <% e.subjects.forEach(subject => { %>
+                        <label for="<%= subject.name %>@<%= e.name %>"><%= subject.name %></label>
+                        <input type="text" name="<%= subject.name %>@<%= e.name %>" id="<%= subject.name %>@<%= e.name %>" value="<%= subject.tutor %> ">
+                    <% }) %>
+                </div>
             </div>
-            <div class="dropdown-content">
-                <h2>Subjects:</h2>
-                <% e.subjects.forEach(subject => { %>
-                    <label for="<%= subject.name %>@<%= e.name %>"><%= subject.name %></label>
-                    <input type="text" name="<%= subject.name %>@<%= e.name %>" id="<%= subject.name %>@<%= e.name %>" value="<%= subject.tutor %> ">
-                <% }) %>
-            </div>
-        </div>
-    <% }) %>
+        <% }) %>
+    </div>
     <script>
         function dropdown(e){
             let parent = e.parentElement;
@@ -116,6 +118,73 @@
             }else{
                 dropdownContent.style.display = "none"
             }
+        }
+        function addClass(){
+            let className = document.getElementById("className").value;
+            if(className == null || className == ""){
+                // alert("Class Name can't be Empty")
+                return;
+            }
+            document.getElementById("className").value = "";
+            let location = document.getElementById("classAddForm").getAttribute("action")
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST",location);
+            xhttp.setRequestHeader("Content-Type", "application/json")
+            xhttp.send(JSON.stringify({name : className}))
+            xhttp.onload = function(){
+                let res = this.responseText;
+                if(res=="OK"){
+                    addClassToDom(className);
+                }else{
+                    alert("Class Already Exist")
+                }
+            }
+        }
+        function addClassToDom(className){
+            let elements = document.querySelectorAll(".class")
+            let parent = document.querySelector(".classes");
+            let e = document.createElement("div")
+            e.className = "class"
+            e.style = "font-weight:bold;"
+            e.innerHTML = className;
+            e.id = className;
+            e.setAttribute("onclick","openClass(this)")
+            parent.appendChild(e)
+        }
+        function setClassToDom(classNames){
+            let elements = document.querySelectorAll(".class")
+            elements.forEach(e=>{
+                e.remove();
+            })
+            let parent = document.querySelector(".classes");
+            classNames.forEach(element=>{
+                let e = document.createElement("div")
+                e.className = "class"
+                e.style = "font-weight:bold;"
+                e.innerHTML = element;
+                e.id = className;
+                e.setAttribute("onclick","openClass(this)")
+                parent.appendChild(e)
+            })
+        }
+        function removeClassFromDom(className){
+            let element = document.querySelectorAll(".class")
+            element = [...element].find(e=>{
+                return e.innerText == className
+            })
+            if(element){
+                element.remove()
+            }
+            else{
+                return({
+                    code:404,
+                    error : "Class Not Found"
+                })
+            }
+            // let parent = document.querySelector(".collections");
+        }
+        function openClass(className){
+            location.assign(`/timetable/`)
         }
     </script>
 </body>
