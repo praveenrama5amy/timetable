@@ -156,17 +156,25 @@
             let minimumHours = document.getElementById("minimumHours").value
             let maximumHours = document.getElementById("maximumHours").value
             let tutorsElements = document.querySelectorAll(".subjectTutors")
+            let classesElements = document.querySelectorAll(".subjectClasses")
             let tutors = []
+            let classes = []
             tutorsElements.forEach(tutor => {
                 if(tutor.checked == true){
                     tutors.push(tutor.value)
                 }
             })
+            classesElements.forEach(room => {
+                if(room.checked == true){
+                    classes.push(room.value)
+                }
+            })
+            
             if(!(name != "" && minimumHours != "" && maximumHours != "" && name != null && minimumHours != null && maximumHours != null)){
                 alert("Fill all the Field")
                 return
             }
-            let data = {name,minimumHours,maximumHours,tutors}
+            let data = {name,minimumHours,maximumHours,tutors,classes}
             console.log(data);
             let res = await ajax("addSubject","POST",JSON.stringify(data));
             res = JSON.parse(res)

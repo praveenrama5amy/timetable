@@ -8,7 +8,7 @@ const { json, urlencoded, text } = require('body-parser')
 const cookieParser = require('cookie-parser')
 
 require("./app/setup").setup();
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, addSubject, addTutor, editTutorSubject, editClassSubject} = require("./app/organisation")
+const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, addSubject, addTutor, editTutorSubject, editClassSubject, editSubjectTutorOfClass} = require("./app/organisation")
 const summary = require("./app/summary")
 
 
@@ -61,7 +61,8 @@ app.get("/organisation/:name/classes",(req,res)=>{
     let organisation = organisations.find(e=>{return e.name == req.params.name})
     res.render("classes",{
         organisation,
-        classes : organisation.classes
+        classes : organisation.classes,
+        tutors : organisation.tutors
     })
 })
 app.get("/organisation/:name/tutors",(req,res)=>{
@@ -115,6 +116,19 @@ app.get("/organisation/:name/tutors",(req,res)=>{
     let value = req.body.value;
     res.send(editClassSubject(organisation.name,className,subjectName,value))
     
+}).post("/organisation/:name/editSubjectTutorOfClass",(req,res)=>{
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    req.body = JSON.parse(req.body)
+    let className = req.body.className;
+    let subjectName = req.body.subjectName;
+    let tutorName = req.body.tutorName;
+    let value = req.body.value;
+    res.send(editSubjectTutorOfClass(organisation.name,className,subjectName,tutorName,value));
 })
 app.get("/organisation/:name/subjects",(req,res)=>{
     let organisations = getOrganisations()
@@ -142,7 +156,6 @@ app.get("/organisation/:name/subjects",(req,res)=>{
             organisation.subjects.find(sub => sub == subject)
         })
     })
-    console.log(subjects);
     res.render("subjects",{
         organisation,
         classes : organisation.classes,
@@ -160,9 +173,9 @@ app.get("/organisation/:name/subjects",(req,res)=>{
     let subjectName = req.body.name;
     let minimumHours = parseInt(req.body.minimumHours)
     let maximumHours = parseInt(req.body.maximumHours)
-    let tutors = req.body.tutors
+    let classes = req.body.classes
     
-    res.send(addSubject(organisation.name,subjectName,minimumHours,maximumHours,tutors))
+    res.send(addSubject(organisation.name,subjectName,minimumHours,maximumHours,[],classes))
 })
 app.get("/organisation/:name/summary",(req,res)=>{
     let organisations = getOrganisations()
@@ -176,7 +189,8 @@ app.get("/organisation/:name/summary",(req,res)=>{
         tutors : organisation.tutors,
         subjects : organisation.subjects,
         classes : organisation.classes,
-        general : organisation.general
+        general : organisation.general,
+        summary : summary.checkHourAvailability(organisation.name)
     })
 })
 app.post("/organisation/:name/addClass",(req,res)=>{

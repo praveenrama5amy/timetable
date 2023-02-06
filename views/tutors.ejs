@@ -71,9 +71,10 @@
 </head>
 <body>
     <div class="form">
-        <div class="dropdown-btn" onclick="dropdown(this)" style="display: flex;align-content: center;justify-content: center;">
-            <button style="display: flex;justify-content: center;align-items: center;cursor: pointer;width: 100%;padding: 10px;">ADD
+        <div class="dropdown-btn" style="display: flex;align-content: center;justify-content: center;">
+            <button style="display: flex;justify-content: center;align-items: center;cursor: pointer;width: 100%;padding: 10px;" onclick="dropdown(this.parentElement)">ADD
                 <span class="material-symbols-outlined">add</span></button>
+            <button style="cursor: pointer;" onclick="expandAll(this)">Shrink All</button>
         </div>
         <div class="dropdown-content" style="display: none;">
             <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
@@ -180,6 +181,21 @@
                 alert(res.error)
                 location.reload();
             }
+        }
+        function expandAll(e){
+            if(e.innerText == "Expand All"){     
+                document.querySelectorAll(".tutor .dropdown-content").forEach(e => {
+                    e.style.display = "block"
+                })
+                e.innerText = "Close All"
+            }
+            else{
+                document.querySelectorAll(".tutor .dropdown-content").forEach(e => {
+                    e.style.display = "none"
+                })
+                e.innerText = "Expand All"
+            }
+            document.querySelector(".form .dropdown-content").style = "display:none;"
         }
     </script>
 </body>

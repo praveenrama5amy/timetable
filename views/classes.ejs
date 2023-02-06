@@ -11,6 +11,8 @@
             box-sizing: border-box;
             margin: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition:  1s ease-out;
+            
         }
         html{
             height: -webkit-fill-available;
@@ -43,7 +45,11 @@
         form{
             width: 70%;
         }
-        input,button{
+        input[type = "text"]{
+            padding: 10px;
+            width: 100%;
+        }
+        button{
             padding: 10px;
             width: 100%;
         }
@@ -72,11 +78,25 @@
         .class .dropdown-btn :first-child{
             flex: 1;
         }
-        .dropdown{
-            display: none;
-        }
         .dropdown-content{
             display: none;
+        }
+        .tutorsSelect{
+            display: flex;
+            align-items: center;
+        }
+        .pointer{
+            cursor: pointer;
+        }
+        label{
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        input[type = "checkbox"]{
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -102,8 +122,30 @@
                 <div class="dropdown-content">
                     <h2>Subjects:</h2>
                     <% e.subjects.forEach(subject => { %>
-                        <label for="<%= subject.name %>@<%= e.name %>"><%= subject.name %></label>
-                        <input type="text" name="<%= subject.name %>@<%= e.name %>" id="<%= subject.name %>@<%= e.name %>" value="<%= subject.tutor %> ">
+                        <div style="display: flex;align-items: center;">
+                            <label for="<%= subject.name %>@<%= e.name %>" style="flex: 1;"><%= subject.name %></label>
+                            <div class="dropdown" style="border: solid black 1px;padding: 10px;border-radius: 4px;">
+                                <div class="dropdown-btn  tutorsSelect" onclick="dropdown(this)" style="width: 60vw;">
+                                    <% if (subject.tutors.length != 0) { %>
+                                        <p><%= subject.tutors.join(",") %></p>
+                                    <% } else { %>
+                                        <p>Select Tutor teaches this Subject</p>
+                                    <% } %>
+                                    <span class="material-symbols-outlined">arrow_drop_down</span></div>
+                                <div class="dropdown-content">
+                                    <% tutors.forEach(tutor => { %>
+                                        <div style="display: flex;align-items: center;">
+                                            <input type="checkbox" name="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" id="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer" onchange="editSubjectTutorOfClass(this)"
+                                        <% if (subject.tutors.includes(tutor.name)) { %>
+                                            checked
+                                        <% } %>
+                                        >
+                                        <label for="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer"><%= tutor.name %></label>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
                     <% }) %>
                 </div>
             </div>
@@ -185,6 +227,55 @@
         }
         function openClass(className){
             location.assign(`/timetable/`)
+        }
+        function ajax(url,method,data){
+            return new Promise((resolve)=>{
+                let xhttp = new XMLHttpRequest();
+                xhttp.onload = function(){
+                    resolve(this.responseText)
+                }
+                xhttp.open(method,url);
+                xhttp.send(data);
+            })
+        }
+        async function editSubjectTutorOfClass(element){
+            let [tutorName, subjectName, className] = (element.name).split("@");
+            let value = element.checked
+            let data = {
+                tutorName,
+                subjectName,
+                className,
+                value
+            }
+            let res = await ajax("editSubjectTutorOfClass","POST",JSON.stringify(data));
+            res = JSON.parse(res)
+            if(res.error != null){
+                alert(res.error)
+                location.reload();
+                return;
+            }
+            let paraElement = element.parentElement.parentElement.parentElement.querySelector(".tutorsSelect p");
+            if(paraElement.innerText == "Select Tutor teaches this Subject" && value == true){
+                paraElement.innerText = tutorName
+            }else if(paraElement.innerText != "Select Tutor teaches this Subject" && value == true){
+                paraElement.innerText += ", "+ tutorName;
+            }
+            if(paraElement.innerText != "Select Tutor teaches this Subject" && value == false){
+                let tutors = paraElement.innerText.split(",");
+                tutors = tutors.filter(tutor => {
+                    tutor = tutor.trim();
+                    tutorName = tutorName.trim();
+                    if(tutor != tutorName){
+                        return true;
+                    }
+                });
+                if(tutors.length == 0){
+                    paraElement.innerText = "Select Tutor teaches this Subject"    
+                    return;
+                }
+                tutors = tutors.join(", ");
+                paraElement.innerText = tutors
+            }
         }
     </script>
 </body>

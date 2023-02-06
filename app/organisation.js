@@ -142,6 +142,7 @@ var createMissingFiles = (organisationName) => {
 }
 var addClass = (organisationName,className) => {
     let organisation = getOrganisations(organisationName);
+    className = className.trim();
     if(organisation.code && organisation.code == 2){
         return organisation
     }
@@ -216,13 +217,15 @@ var setSubject = (organisationName , subjects) => {
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.subjects}`,JSON.stringify(subjects))
 }
-var addSubject = (organisationName, subjectName, minimumHours, maximumHours, tutors) => {
+var addSubject = (organisationName, subjectName, minimumHours, maximumHours, tutors,classes) => {
     let organisation = getOrganisations(organisationName)
     if(organisation.error){
         return organisation
     }
+    subjectName = subjectName.trim();
     let subjects = organisation.subjects;
     let tutorsOld = organisation.tutors;
+    let classesOld = organisation.classes;
     if(subjects.find(subject => {return subject.name == subjectName})){
         return {error:"Subject Already Exists", code:4};
     }
@@ -237,6 +240,9 @@ var addSubject = (organisationName, subjectName, minimumHours, maximumHours, tut
     }
     tutors.forEach(tutor => {
         if(tutorsOld.find(e => e.name == tutor))data.tutors.push(tutor)
+    })
+    classes.forEach(room => {
+        if(classesOld.find(e => e.name == room))data.classes.push(room)
     })
     subjects.push(data)
     subjects = subjects.sort(function(a,b) {
@@ -264,6 +270,25 @@ var addSubject = (organisationName, subjectName, minimumHours, maximumHours, tut
         return x < y ? -1 : x > y ? 1 : 0;
     });
     setTutor(organisationName, tutorsOld)
+    //adding Class
+    classes.forEach(room => {
+        room = classesOld.find(e => {return e.name == room})
+        if(room.subjects.find(subject => subject.name == subjectName)){
+            return;
+        }
+        room.subjects.push({name : subjectName, tutors : []})
+        room.subjects = room.subjects.sort(function(a,b) {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+    })
+    classesOld = classesOld.sort(function(a,b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+    });
+    setClass(organisationName, classesOld);
     return{
         code : 200, message : "Subject Added"
     }
@@ -277,6 +302,7 @@ var setTutor = (organisationName , tutors) => {
 }
 var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {
     let organisation = getOrganisations(organisationName)
+    tutorName = tutorName.trim();
     if(organisation.error){
         return organisation
     }
@@ -351,10 +377,20 @@ var editClassSubject = (organisationName,className,subjectName,value) => {
     if(subject == null)return{error:"Subject Not Exists", code:404}
     if(value == true && !room.subjects.find(subject => subject.name == subjectName)){
         room.subjects.push({ name: subjectName, tutors: [] });
+        room.subjects = room.subjects.sort(function(a,b) {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
         setClass(organisationName,classes)
     }
     if(value == true && !subject.classes.includes(className)){
         subject.classes.push(className);
+        subject.classes = subject.classes.sort(function(a,b) {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
         setSubject(organisationName,subjects)
     }
     if(value == false && room.subjects.find(subject => subject.name == subjectName)){
@@ -366,6 +402,36 @@ var editClassSubject = (organisationName,className,subjectName,value) => {
         setSubject(organisationName,subjects)
     }
     return{code : 200, message : "Subject Classes Edited"}
+}
+var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,value) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let tutors = organisation.tutors;
+    let subjects = organisation.subjects;
+    let classes = organisation.classes;
+    let room = classes.find(room => {return room.name == className});
+    if(room == null)return{error:"Class Not Exists", code:404}
+    let subject = room.subjects.find(subject => {return subject.name == subjectName})
+    if(subject == null)return{error:"Subject Not Exists", code:404}
+    let tutor = tutors.find(tutor => {return tutor.name == tutorName})
+    if(tutor == null)return{error:"Tutor Not Exists", code:404}
+    if(value == true && !subject.tutors.includes(tutorName)){
+        subject.tutors.push(tutorName);
+        subject.tutors.sort(function(a,b) {
+            var x = a.toLowerCase();
+            var y = b.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+    }
+    if(value == false && subject.tutors.includes(tutorName)){
+        subject.tutors = subject.tutors.filter(tutor => tutor != tutorName);
+    }
+    setClass(organisationName,classes);
+    return{
+        code: 200, message: `${tutorName} Assigned to ${subjectName} for ${className}`
+    }
 }
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
@@ -381,6 +447,7 @@ module.exports.addSubject = addSubject;
 module.exports.addTutor = addTutor;
 module.exports.editTutorSubject = editTutorSubject;
 module.exports.editClassSubject = editClassSubject;
+module.exports.editSubjectTutorOfClass = editSubjectTutorOfClass;
 
 
 

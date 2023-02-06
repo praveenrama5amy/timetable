@@ -1,6 +1,9 @@
 const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour} = require("./organisation")
 var checkHourAvailability = (organName) => {
     let organisation = getOrganisations(organName)
+    if(organisation.error){
+        return organisation
+    }
     let totalHours = organisation.general.daysPerWeek * organisation.general.hoursPerDay;
     let allClasses = {}
     organisation.classes.forEach(room => {
@@ -22,8 +25,9 @@ var checkHourAvailability = (organName) => {
         }
     });
     console.log(allClasses);
+    return allClasses;
 }
-// checkHourAvailability("ksr");
+checkHourAvailability("ks");
 
 
 module.exports.checkHourAvailability = checkHourAvailability;
