@@ -12,7 +12,6 @@
             margin: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             transition:  1s ease-out;
-            
         }
         html{
             height: -webkit-fill-available;
@@ -98,6 +97,64 @@
             width: 20px;
             height: 20px;
         }
+        .wrapper{
+            display: flex;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 10px;
+        }
+
+        /* color of scrollbar track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        /* color and radius of scrollbar thumb */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* color and radius of scrollbar thumb when hovered */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .classes{
+            flex: 1;
+            overflow-y: scroll;
+            height: 70vh;
+        }
+        .tutors{
+            border: solid black 2px;
+            margin-right: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            height: 70vh;
+            scroll-behavior: smooth;
+        }
+        .tutor{
+            border: solid black 1px;
+            margin: 5px;
+            padding: 60px 10px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .tutor .name{
+            font-weight: bold;
+        }
+        .tutor:first-child{
+            margin-top: 5vh;
+        }
+        .tutor:last-child{
+            margin-bottom: 5vh;
+        }
     </style>
 </head>
 <body>
@@ -112,46 +169,62 @@
             </form>
         </div>
     </div>
-    <div class="classes">
-        <% classes.forEach(e => { %>
-            <div class="class">
-                <div class="dropdown-btn" onclick="dropdown(this)">
-                    <p><%= e.name %></p>
-                    <span class="material-symbols-outlined">arrow_drop_down</span>
-                </div>
-                <div class="dropdown-content">
-                    <h2>Subjects:</h2>
-                    <% e.subjects.forEach(subject => { %>
-                        <div style="display: flex;align-items: center;">
-                            <label for="<%= subject.name %>@<%= e.name %>" style="flex: 1;"><%= subject.name %></label>
-                            <div class="dropdown" style="border: solid black 1px;padding: 10px;border-radius: 4px;">
-                                <div class="dropdown-btn  tutorsSelect" onclick="dropdown(this)" style="width: 60vw;">
-                                    <% if (subject.tutors.length != 0) { %>
-                                        <p><%= subject.tutors.join(",") %></p>
-                                    <% } else { %>
-                                        <p>Select Tutor teaches this Subject</p>
-                                    <% } %>
-                                    <span class="material-symbols-outlined">arrow_drop_down</span></div>
-                                <div class="dropdown-content">
-                                    <% tutors.forEach(tutor => { %>
-                                        <div style="display: flex;align-items: center;">
-                                            <input type="checkbox" name="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" id="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer" onchange="editSubjectTutorOfClass(this)"
-                                        <% if (subject.tutors.includes(tutor.name)) { %>
-                                            checked
+    <div class="wrapper">
+        <div class="classes">
+            <% classes.forEach(e => { %>
+                <div class="class">
+                    <div class="dropdown-btn" onclick="dropdown(this)">
+                        <p><%= e.name %></p>
+                        <span class="material-symbols-outlined">arrow_drop_down</span>
+                    </div>
+                    <div class="dropdown-content">
+                        <h2>Subjects:</h2>
+                        <% e.subjects.forEach(subject => { %>
+                            <div style="display: flex;align-items: center;">
+                                <label for="<%= subject.name %>@<%= e.name %>" style="flex: 1;"><%= subject.name %></label>
+                                <div class="dropdown" style="border: solid black 1px;padding: 10px;border-radius: 4px;">
+                                    <div class="dropdown-btn  tutorsSelect" onclick="dropdown(this)" style="width: 60vw;">
+                                        <% if (subject.tutors.length != 0) { %>
+                                            <p><%= subject.tutors.join(",") %></p>
+                                        <% } else { %>
+                                            <p>Select Tutor teaches this Subject</p>
                                         <% } %>
-                                        >
-                                        <label for="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer"><%= tutor.name %></label>
-                                        </div>
-                                    <% }) %>
+                                        <span class="material-symbols-outlined">arrow_drop_down</span></div>
+                                    <div class="dropdown-content">
+                                        <% tutors.forEach(tutor => { %>
+                                            <div style="display: flex;align-items: center;">
+                                                <input type="checkbox" name="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" id="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer" onchange="editSubjectTutorOfClass(this)"
+                                            <% if (subject.tutors.includes(tutor.name)) { %>
+                                                checked
+                                            <% } %>
+                                            >
+                                            <label for="<%= tutor.name %>@<%= subject.name %>@<%= e.name %>" class="pointer"><%= tutor.name %></label>
+                                            </div>
+                                        <% }) %>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <% }) %>
+                        <% }) %>
+                    </div>
                 </div>
-            </div>
-        <% }) %>
+            <% }) %>
+        </div>
+        <div class="tutors">
+            <% tutors.forEach(tutor => { %>
+                <div class="tutor" id="<%= tutor.name %>Div">
+                    <p class="name">
+                        <%= tutor.name %>
+                    </p>
+                    <p>Minimum Hours : <span class="minimumHours"><%= tutor.minimumHours %></span></p>
+                    <p>Maximum Hours : <span class="maximumHours"><%= tutor.maximumHours %></span></p>
+                    <p>Alloted Hours : <span class="allotedHours"><%= tutor.allotedHours %></span></p>
+                    <p>Available Hours : <span class="availableHours"><%= tutor.availableHours %></span></p>
+                </div>
+            <% }) %>
+        </div>
     </div>
     <script>
+        var organisation = <%- JSON.stringify(organisation) %>
         function dropdown(e){
             let parent = e.parentElement;
             let dropdownContent = parent.getElementsByClassName("dropdown-content")[0]
@@ -271,12 +344,52 @@
                 });
                 if(tutors.length == 0){
                     paraElement.innerText = "Select Tutor teaches this Subject"    
-                    return;
+                }else{
+                    tutors = tutors.join(", ");
+                    paraElement.innerText = tutors
                 }
-                tutors = tutors.join(", ");
-                paraElement.innerText = tutors
             }
+            location.replace(`#${tutorName}Div`)
+            updateTutorsList();
         }
-    </script>
+        async function updateTutorsList(){
+            let tutors = await ajax(`getTutorsFullDetails`,"GET").then(value => JSON.parse(value))
+            tutors.forEach(tutor => {
+                let div = document.querySelector(`#${tutor.name}Div`)
+                if(div == null) return;
+                div.querySelector(".allotedHours").innerText = tutor.allotedHours;
+                div.querySelector(".availableHours").innerText = tutor.availableHours;
+                if(tutor.allotedHours < tutor.minimumHours){
+                    div.style.backgroundImage = "linear-gradient(to right, rgba(0,100,0,0.4), rgba(0,255,0,0.7))"
+                }
+                else if(tutor.allotedHours > tutor.maximumHours){
+                    div.style.backgroundImage = "linear-gradient(to right, rgba(150,0,0,0.4), rgba(255,0,0,0.7))"
+                }else if(tutor.allotedHours <= tutor.maximumHours && tutor.allotedHours >= tutor.minimumHours){
+                    div.style.backgroundImage = "linear-gradient(to right, rgba(0,100,200,0.6), rgba(0,100,200,0.9))"
+                }
+            })
+        }
+        updateTutorsList()
+        function addTutorToTutors(tutorName, minimumHours, maximumHours, allotedHours, availableHours){
+            let parentDiv = document.querySelector(".tutors");
+            let div = document.createElement("div");
+            div.className = "tutor"
+            div.id = `${tutorName}Div`
+            div.innerHTML = `
+            <p class="name">${tutorName}</p>
+            <p>Minimum Hours : <span class="minimumHours">${minimumHours}</span></p>
+            <p>Maximum Hours : <span class="maximumHours">${maximumHours}</span></p>
+            <p>Alloted Hours : <span class="allotedHours">${allotedHours}</span></p>
+            <p>Available Hours : <span class="availableHours">${availableHours}</span></p>
+            `
+            parentDiv.appendChild(div);
+        }
+        function removeAllTutors(){
+            let parentDiv = document.querySelectorAll(".tutor");
+            parentDiv.forEach(tutor => {
+                tutor.remove();
+            })
+        }
+  </script>
 </body>
 </html>

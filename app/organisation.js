@@ -433,6 +433,29 @@ var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,
         code: 200, message: `${tutorName} Assigned to ${subjectName} for ${className}`
     }
 }
+var getTutorFullDetails = (organisationName) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let tutors = organisation.tutors;
+    let subjects = organisation.subjects;
+    let classes = organisation.classes;
+    tutors.forEach(tutor => {
+        tutor.allotedHours = 0;
+        tutor.availableHours = tutor.maximumHours;
+    })
+    classes.forEach(room => {
+        room.subjects.forEach(subject => {
+            subject.tutors.forEach(tutor => {
+                subject = subjects.find(e => subject.name == e.name);
+                tutors.find(e=>e.name == tutor).allotedHours += subject.minimumHours;
+                tutors.find(e=>e.name == tutor).availableHours -= subject.minimumHours;
+            })
+        })
+    })
+    return tutors
+}
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
 module.exports.deleteOrganisation = deleteOrganisation;
@@ -448,6 +471,7 @@ module.exports.addTutor = addTutor;
 module.exports.editTutorSubject = editTutorSubject;
 module.exports.editClassSubject = editClassSubject;
 module.exports.editSubjectTutorOfClass = editSubjectTutorOfClass;
+module.exports.getTutorFullDetails = getTutorFullDetails;
 
 
 

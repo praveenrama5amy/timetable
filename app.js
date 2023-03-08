@@ -8,7 +8,7 @@ const { json, urlencoded, text } = require('body-parser')
 const cookieParser = require('cookie-parser')
 
 require("./app/setup").setup();
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, addSubject, addTutor, editTutorSubject, editClassSubject, editSubjectTutorOfClass} = require("./app/organisation")
+const { createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, addSubject, addTutor, editTutorSubject, editClassSubject, editSubjectTutorOfClass, getTutorFullDetails } = require("./app/organisation")
 const summary = require("./app/summary")
 
 
@@ -62,8 +62,17 @@ app.get("/organisation/:name/classes",(req,res)=>{
     res.render("classes",{
         organisation,
         classes : organisation.classes,
-        tutors : organisation.tutors
+        tutors : getTutorFullDetails(organisation.name)
     })
+})
+app.get("/organisation/:name/getTutorsFullDetails",(req,res) => {
+    let organisations = getOrganisations()
+    if(!organisations.find(e=>{return e.name == req.params.name})){
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    res.send(getTutorFullDetails(organisation.name))
 })
 app.get("/organisation/:name/tutors",(req,res)=>{
     let organisations = getOrganisations()
