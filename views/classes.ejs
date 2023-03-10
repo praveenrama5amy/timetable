@@ -324,8 +324,10 @@
             res = JSON.parse(res)
             if(res.error != null){
                 alert(res.error)
-                location.reload();
-                return;
+                if(res.code != 401){
+                    location.reload();
+                    return;
+                }
             }
             let paraElement = element.parentElement.parentElement.parentElement.querySelector(".tutorsSelect p");
             if(paraElement.innerText == "Select Tutor teaches this Subject" && value == true){

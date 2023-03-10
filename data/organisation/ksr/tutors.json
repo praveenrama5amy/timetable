@@ -130,15 +130,15 @@
     {
         "name": "Praveen",
         "minimumHours": 17,
-        "maximumHours": 18,
+        "maximumHours": 20,
         "subjects": [
             "TAM"
         ]
     },
     {
         "name": "Sabari",
-        "minimumHours": 17,
-        "maximumHours": 18,
+        "minimumHours": 4,
+        "maximumHours": 5,
         "subjects": [
             "ENG"
         ]

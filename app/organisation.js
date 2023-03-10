@@ -408,7 +408,7 @@ var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,
     if(organisation.error){
         return organisation
     }
-    let tutors = organisation.tutors;
+    let tutors = getTutorFullDetails(organisation.name);
     let subjects = organisation.subjects;
     let classes = organisation.classes;
     let room = classes.find(room => {return room.name == className});
@@ -419,18 +419,27 @@ var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,
     if(tutor == null)return{error:"Tutor Not Exists", code:404}
     if(value == true && !subject.tutors.includes(tutorName)){
         subject.tutors.push(tutorName);
-        subject.tutors.sort(function(a,b) {
-            var x = a.toLowerCase();
-            var y = b.toLowerCase();
-            return x < y ? -1 : x > y ? 1 : 0;
-        });
+        // subject.tutors.sort(function(a,b) {
+        //     var x = a.toLowerCase();
+        //     var y = b.toLowerCase();
+        //     return x < y ? -1 : x > y ? 1 : 0;
+        // });
     }
     if(value == false && subject.tutors.includes(tutorName)){
         subject.tutors = subject.tutors.filter(tutor => tutor != tutorName);
     }
     setClass(organisationName,classes);
-    return{
-        code: 200, message: `${tutorName} Assigned to ${subjectName} for ${className}`
+    tutors = getTutorFullDetails(organisation.name);
+    tutor = tutors.find(tutor => {return tutor.name == tutorName})
+    if(tutor.availableHours < 0){
+        return{
+            code: 401, error: `${tutorName} exceeding his Maximum work load`
+        }
+    }
+    else{
+        return{
+            code: 200, message: `${tutorName} Assigned to ${subjectName} for ${className}`
+        }
     }
 }
 var getTutorFullDetails = (organisationName) => {
