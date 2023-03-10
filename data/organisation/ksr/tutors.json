@@ -1,24 +1,41 @@
 [
     {
         "name": "Abirami",
-        "minimumHours": 17,
+        "minimumHours": 15,
         "maximumHours": 18,
         "subjects": [
             "C++",
             "OS",
-            "RDBMS PRAC",
             "LINUX PRAC"
         ]
     },
     {
+        "name": "Anantharaj",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "MAT"
+        ],
+        "classes": []
+    },
+    {
         "name": "Arunraja",
-        "minimumHours": 17,
+        "minimumHours": 16,
         "maximumHours": 18,
         "subjects": [
             "MAT",
             "DM",
             "IOT"
         ]
+    },
+    {
+        "name": "Ashok",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "ENG"
+        ],
+        "classes": []
     },
     {
         "name": "Balakrishnan",
@@ -30,7 +47,7 @@
     },
     {
         "name": "Bhuma",
-        "minimumHours": 17,
+        "minimumHours": 14,
         "maximumHours": 18,
         "subjects": [
             "COA",
@@ -41,7 +58,7 @@
     },
     {
         "name": "Deepa",
-        "minimumHours": 17,
+        "minimumHours": 0,
         "maximumHours": 18,
         "subjects": [
             "MAT"
@@ -49,7 +66,7 @@
     },
     {
         "name": "Dhanasekaran",
-        "minimumHours": 17,
+        "minimumHours": 16,
         "maximumHours": 18,
         "subjects": [
             "MINI-PRO PRAC",
@@ -57,8 +74,15 @@
         ]
     },
     {
+        "name": "Haripriya",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [],
+        "classes": []
+    },
+    {
         "name": "Jayabharathi",
-        "minimumHours": 17,
+        "minimumHours": 13,
         "maximumHours": 18,
         "subjects": [
             "C++",
@@ -69,7 +93,7 @@
     },
     {
         "name": "Jayapal",
-        "minimumHours": 18,
+        "minimumHours": 17,
         "maximumHours": 18,
         "subjects": [
             "RDBMS",
@@ -77,6 +101,16 @@
             "LINUX PRAC",
             "MT"
         ]
+    },
+    {
+        "name": "Jeeva",
+        "minimumHours": 1,
+        "maximumHours": 12,
+        "subjects": [
+            "EVS",
+            "PLACEMENT"
+        ],
+        "classes": []
     },
     {
         "name": "Jeevitha",
@@ -88,6 +122,13 @@
         ]
     },
     {
+        "name": "Kavitha",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [],
+        "classes": []
+    },
+    {
         "name": "Kousalya",
         "minimumHours": 17,
         "maximumHours": 18,
@@ -96,6 +137,15 @@
             "C++ PRAC",
             "DM"
         ]
+    },
+    {
+        "name": "Lavanya",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "ENG"
+        ],
+        "classes": []
     },
     {
         "name": "Maheshwari",
@@ -109,7 +159,7 @@
     {
         "name": "Murukku",
         "minimumHours": 17,
-        "maximumHours": 18,
+        "maximumHours": 19,
         "subjects": [
             "DT PRAC",
             "AIMS",
@@ -136,8 +186,17 @@
         ]
     },
     {
+        "name": "Ragavan",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "MAT"
+        ],
+        "classes": []
+    },
+    {
         "name": "Sabari",
-        "minimumHours": 4,
+        "minimumHours": 0,
         "maximumHours": 5,
         "subjects": [
             "ENG"
@@ -145,7 +204,7 @@
     },
     {
         "name": "Sakthivel",
-        "minimumHours": 18,
+        "minimumHours": 14,
         "maximumHours": 18,
         "subjects": [
             "AIMS",
@@ -155,7 +214,7 @@
     },
     {
         "name": "Sathyamoorthi",
-        "minimumHours": 17,
+        "minimumHours": 12,
         "maximumHours": 18,
         "subjects": [
             "DT PRAC",
@@ -167,7 +226,7 @@
     },
     {
         "name": "Sharmila",
-        "minimumHours": 17,
+        "minimumHours": 0,
         "maximumHours": 18,
         "subjects": [
             "ENG"
@@ -184,7 +243,7 @@
     },
     {
         "name": "Sujatha",
-        "minimumHours": 17,
+        "minimumHours": 0,
         "maximumHours": 18,
         "subjects": [
             "MAT"
@@ -192,7 +251,7 @@
     },
     {
         "name": "Suresh",
-        "minimumHours": 17,
+        "minimumHours": 15,
         "maximumHours": 18,
         "subjects": [
             "MINI-PRO PRAC"
@@ -211,7 +270,7 @@
     },
     {
         "name": "Venkateswaran",
-        "minimumHours": 8,
+        "minimumHours": 6,
         "maximumHours": 12,
         "subjects": [
             "IOT"
@@ -219,7 +278,7 @@
     },
     {
         "name": "Vimala",
-        "minimumHours": 17,
+        "minimumHours": 15,
         "maximumHours": 18,
         "subjects": [
             "BDA",
