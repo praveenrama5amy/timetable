@@ -1,0 +1,42 @@
+.App{
+    height: 100%;
+    overflow-y: scroll;
+}
+.header{
+    background-color:rgba(134, 123, 123, 0.651);
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color:black;
+    font-weight: bold;
+    padding: 0.1em;
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+.wrapper{
+    /* background-color: #f0f0f0; */
+    background-color: #fff;
+    width: 90%;
+    height: 80%;
+    margin: auto;
+    margin-top: 5vh;
+    display: block;
+    padding: 20px;
+}
+.viewSelector{
+    display: flex;
+    align-items: center;
+}
+select, option, button{
+    cursor: pointer;
+}
+
+
+.timetable{
+    margin-top: 5%;
+}
+.timetable th{
+    text-align: center;
+}
+.timetable td{
+    text-align: center;
+}

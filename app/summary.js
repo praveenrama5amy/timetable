@@ -1,4 +1,4 @@
-const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour} = require("./organisation")
+const {createOrganisation, getOrganisations, createClasses, createTutor, deleteOrganisation, addClass, setHour, deleteHour, getTutorFullDetails} = require("./organisation")
 var checkHourAvailability = (organName) => {
     let organisation = getOrganisations(organName)
     if(organisation.error){
@@ -24,10 +24,49 @@ var checkHourAvailability = (organName) => {
             allClasses[room.name] = { stat: false, reason: `overflow`, count: minimumHours - totalHours }
         }
     });
-    console.log(allClasses);
     return allClasses;
 }
-checkHourAvailability("ks");
+var checkTutors = (organName) => {
+    let organisation = getOrganisations(organName)
+    if(organisation.error){
+        return organisation
+    }
+    let allTutors = {}
+    let tutors = getTutorFullDetails(organName);
+    tutors.forEach(tutor => {
+        allTutors[tutor.name] = {}
+        if(tutor.minimumHours <= tutor.allotedHours && tutor.allotedHours <= tutor.maximumHours){
+            allTutors[tutor.name] = {
+                stat : true
+            }
+        }else{
+            if(tutor.minimumHours > tutor.allotedHours){
+                allTutors[tutor.name] = { stat : false, reason : "underflow", count : tutor.minimumHours - tutor.allotedHours };
+            }
+            if(tutor.maximumHours < tutor.allotedHours){
+                allTutors[tutor.name] = { stat : false, reason : "overflow", count : tutor.allotedHours - tutor.maximumHours };
+            }
+        }
+    })
+    return allTutors;
+}
+var checkSubjects = (organName) => {
+    let organisation = getOrganisations(organName);
+    if(organisation.error){
+        return organisation;
+    }
+    let allSubjects = {};
+    organisation.subjects.forEach(subject => {
+        allSubjects[subject.name] = {};
+        let allotedHours = 0;
+        organisation.classes.forEach(room => {
+            if(room.subjects.find(e => e.name == subject.name)){
 
+            }
+        })
+    })
+    return "Under Development"
+}
 
 module.exports.checkHourAvailability = checkHourAvailability;
+module.exports.checkTutors = checkTutors; 

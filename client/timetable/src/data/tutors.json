@@ -1,0 +1,288 @@
+[
+    {
+        "name": "Abirami",
+        "minimumHours": 15,
+        "maximumHours": 18,
+        "subjects": [
+            "C++",
+            "OS",
+            "LINUX PRAC"
+        ]
+    },
+    {
+        "name": "Anantharaj",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "MAT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Arunraja",
+        "minimumHours": 16,
+        "maximumHours": 18,
+        "subjects": [
+            "MAT",
+            "DM",
+            "IOT"
+        ]
+    },
+    {
+        "name": "Ashok",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "ENG"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Balakrishnan",
+        "minimumHours": 12,
+        "maximumHours": 15,
+        "subjects": [
+            "ACC"
+        ]
+    },
+    {
+        "name": "Bhuma",
+        "minimumHours": 14,
+        "maximumHours": 18,
+        "subjects": [
+            "COA",
+            "RDBMS",
+            "RDBMS PRAC",
+            "E-COM"
+        ]
+    },
+    {
+        "name": "Deepa",
+        "minimumHours": 0,
+        "maximumHours": 18,
+        "subjects": [
+            "MAT"
+        ]
+    },
+    {
+        "name": "Dhanasekaran",
+        "minimumHours": 16,
+        "maximumHours": 18,
+        "subjects": [
+            "MINI-PRO PRAC",
+            "MT"
+        ]
+    },
+    {
+        "name": "Haripriya",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [],
+        "classes": []
+    },
+    {
+        "name": "Jayabharathi",
+        "minimumHours": 13,
+        "maximumHours": 18,
+        "subjects": [
+            "C++",
+            "C++ PRAC",
+            "RDBMS PRAC",
+            "LINUX PRAC"
+        ]
+    },
+    {
+        "name": "Jayapal",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "RDBMS",
+            "RDBMS PRAC",
+            "LINUX PRAC",
+            "MT"
+        ]
+    },
+    {
+        "name": "Jeeva",
+        "minimumHours": 1,
+        "maximumHours": 12,
+        "subjects": [
+            "EVS",
+            "PLACEMENT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Jeevitha",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "RDBMS PRAC",
+            "BDA"
+        ]
+    },
+    {
+        "name": "Kavitha",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [],
+        "classes": []
+    },
+    {
+        "name": "Kousalya",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "C++",
+            "C++ PRAC",
+            "DM"
+        ]
+    },
+    {
+        "name": "Lavanya",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "ENG"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Maheshwari",
+        "minimumHours": 18,
+        "maximumHours": 18,
+        "subjects": [
+            "OS",
+            "LINUX PRAC"
+        ]
+    },
+    {
+        "name": "Murukku",
+        "minimumHours": 17,
+        "maximumHours": 19,
+        "subjects": [
+            "DT PRAC",
+            "AIMS",
+            "MINI-PRO PRAC"
+        ]
+    },
+    {
+        "name": "Myvizhi",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "EVS",
+            "OS",
+            "DM",
+            "LINUX PRAC"
+        ]
+    },
+    {
+        "name": "Praveen",
+        "minimumHours": 17,
+        "maximumHours": 20,
+        "subjects": [
+            "TAM"
+        ]
+    },
+    {
+        "name": "Ragavan",
+        "minimumHours": 1,
+        "maximumHours": 10,
+        "subjects": [
+            "MAT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Sabari",
+        "minimumHours": 0,
+        "maximumHours": 5,
+        "subjects": [
+            "ENG"
+        ]
+    },
+    {
+        "name": "Sakthivel",
+        "minimumHours": 14,
+        "maximumHours": 18,
+        "subjects": [
+            "AIMS",
+            "MINI-PRO PRAC",
+            "IOT"
+        ]
+    },
+    {
+        "name": "Sathyamoorthi",
+        "minimumHours": 12,
+        "maximumHours": 18,
+        "subjects": [
+            "DT PRAC",
+            "EVS",
+            "RDBMS",
+            "RDBMS PRAC",
+            "LINUX PRAC"
+        ]
+    },
+    {
+        "name": "Sharmila",
+        "minimumHours": 0,
+        "maximumHours": 18,
+        "subjects": [
+            "ENG"
+        ]
+    },
+    {
+        "name": "Sowmya",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "MT",
+            "E-COM"
+        ]
+    },
+    {
+        "name": "Sujatha",
+        "minimumHours": 0,
+        "maximumHours": 18,
+        "subjects": [
+            "MAT"
+        ]
+    },
+    {
+        "name": "Suresh",
+        "minimumHours": 15,
+        "maximumHours": 18,
+        "subjects": [
+            "MINI-PRO PRAC"
+        ]
+    },
+    {
+        "name": "Uma",
+        "minimumHours": 17,
+        "maximumHours": 18,
+        "subjects": [
+            "COA",
+            "AIMS",
+            "MINI-PRO PRAC",
+            "BDA"
+        ]
+    },
+    {
+        "name": "Venkateswaran",
+        "minimumHours": 6,
+        "maximumHours": 12,
+        "subjects": [
+            "IOT"
+        ]
+    },
+    {
+        "name": "Vimala",
+        "minimumHours": 15,
+        "maximumHours": 18,
+        "subjects": [
+            "BDA",
+            "E-COM"
+        ]
+    }
+]

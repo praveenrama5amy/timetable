@@ -21,9 +21,8 @@
             "II-BCA-C"
         ],
         "tutors": [
-            "Uma",
-            "Sakthivel",
-            "Murukku"
+            "Murukku",
+            "Uma"
         ]
     },
     {
@@ -37,7 +36,6 @@
         ],
         "tutors": [
             "Jeevitha",
-            "Vimala",
             "Uma"
         ]
     },
@@ -53,10 +51,8 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Suresh",
-            "Murukku",
+            "Abirami",
             "Jayabharathi",
-            "Maheshwari",
             "Kousalya"
         ]
     },
@@ -72,14 +68,7 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Suresh",
-            "Murukku",
-            "Myvizhi",
             "Jayabharathi",
-            "Sathyamoorthi",
-            "Abirami",
-            "Maheshwari",
-            "Balakrishnan",
             "Kousalya"
         ]
     },
@@ -117,11 +106,8 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Uma",
-            "Kousalya",
-            "Arunraja",
-            "Dhanasekaran",
-            "Bhuma"
+            "Bhuma",
+            "Uma"
         ]
     },
     {
@@ -134,9 +120,9 @@
             "II-BCA-C"
         ],
         "tutors": [
-            "Myvizhi",
             "Arunraja",
-            "Kousalya"
+            "Kousalya",
+            "Myvizhi"
         ]
     },
     {
@@ -151,15 +137,8 @@
             "I-BCA-A"
         ],
         "tutors": [
-            "Jayapal",
-            "Kousalya",
-            "Maheshwari",
-            "Myvizhi",
-            "Jeevitha",
-            "Bhuma",
-            "Vimala",
-            "Arunraja",
-            "Murukku"
+            "Murukku",
+            "Sathyamoorthi"
         ]
     },
     {
@@ -172,9 +151,9 @@
             "III-BCA-A"
         ],
         "tutors": [
-            "Vimala",
             "Bhuma",
-            "Sowmya"
+            "Sowmya",
+            "Vimala"
         ]
     },
     {
@@ -189,10 +168,7 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Lavanya",
-            "Ashok",
             "Sabari",
-            "Haripriya",
             "Sharmila"
         ]
     },
@@ -208,10 +184,7 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Maheshwari",
-            "Vimala",
             "Myvizhi",
-            "Jeeva",
             "Sathyamoorthi"
         ]
     },
@@ -225,9 +198,8 @@
             "III-BCA-C"
         ],
         "tutors": [
-            "Venkateswaran",
-            "Sakthivel",
-            "Arunraja"
+            "Arunraja",
+            "Sakthivel"
         ]
     },
     {
@@ -241,24 +213,18 @@
         ],
         "tutors": [
             "Abirami",
-            "Sathyamoorthi",
-            "Myvizhi",
             "Jayabharathi",
+            "Jayapal",
             "Maheshwari",
-            "Jayapal"
+            "Myvizhi",
+            "Sathyamoorthi"
         ]
     },
     {
         "name": "MAD PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "tutors": [
-            "Dhanasekaran",
-            "Jeevitha",
-            "Sowmya",
-            "Maheshwari",
-            "Jayapal"
-        ],
+        "tutors": [],
         "classes": [
             "III-BCA-C",
             "III-BCA-B",
@@ -277,11 +243,9 @@
             "I-BCA-E"
         ],
         "tutors": [
-            "Ragavan",
-            "Anantharaj",
-            "Sujatha",
-            "Kavitha",
-            "Deepa"
+            "Arunraja",
+            "Deepa",
+            "Sujatha"
         ]
     },
     {
@@ -294,11 +258,9 @@
             "II-BCA-C"
         ],
         "tutors": [
-            "Uma",
-            "Suresh",
+            "Murukku",
             "Sakthivel",
-            "Dhanasekaran",
-            "Murukku"
+            "Uma"
         ]
     },
     {
@@ -312,7 +274,6 @@
         ],
         "tutors": [
             "Dhanasekaran",
-            "Sowmya",
             "Jayapal"
         ]
     },
@@ -338,8 +299,8 @@
         ],
         "tutors": [
             "Abirami",
-            "Myvizhi",
-            "Maheshwari"
+            "Maheshwari",
+            "Myvizhi"
         ]
     },
     {
@@ -353,23 +314,13 @@
             "I-BCA-B",
             "I-BCA-A"
         ],
-        "tutors": [
-            "Dhanasekaran",
-            "Jeevitha",
-            "Abirami",
-            "Jayabharathi",
-            "Suresh"
-        ]
+        "tutors": []
     },
     {
         "name": "PLACEMENT",
         "minimumHours": 2,
         "maximumHours": 2,
-        "tutors": [
-            "Murukku",
-            "Venkateswaran",
-            "Jeeva"
-        ],
+        "tutors": [],
         "classes": [
             "III-BCA-C",
             "III-BCA-B",
@@ -380,11 +331,7 @@
         "name": "PROJECT",
         "minimumHours": 4,
         "maximumHours": 4,
-        "tutors": [
-            "Sowmya",
-            "Murukku",
-            "Sakthivel"
-        ],
+        "tutors": [],
         "classes": [
             "III-BCA-A",
             "III-BCA-B",
@@ -395,13 +342,7 @@
         "name": "R PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "tutors": [
-            "Suresh",
-            "Jeevitha",
-            "Vimala",
-            "Kousalya",
-            "Uma"
-        ],
+        "tutors": [],
         "classes": [
             "III-BCA-A"
         ]
@@ -417,8 +358,8 @@
         ],
         "tutors": [
             "Bhuma",
-            "Sathyamoorthi",
-            "Jayapal"
+            "Jayapal",
+            "Sathyamoorthi"
         ]
     },
     {
@@ -433,10 +374,8 @@
         "tutors": [
             "Bhuma",
             "Jayabharathi",
-            "Sathyamoorthi",
-            "Jeevitha",
             "Jayapal",
-            "Abirami"
+            "Sathyamoorthi"
         ]
     },
     {

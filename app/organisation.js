@@ -155,6 +155,7 @@ var addClass = (organisationName,className) => {
     }
     classes.push({name : className,subjects : []})
     setClass(organisationName, classes)
+    initializeTimetable(organisationName);
 }
 var setClass = (organisationName , classes) => {
     let organisation = getOrganisations(organisationName);
@@ -163,53 +164,95 @@ var setClass = (organisationName , classes) => {
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.classes}`,JSON.stringify(classes))
 }
-var setHour = (organisationName, className, day, hour, hourName) => {
+var setHour = (organisationName, objectName, day, hour, hourName) => {
     let organisation = getOrganisations(organisationName);
     if(organisation.code && organisation.code == 2){
         return organisation
     }
     let timetable = organisation.timetable;
     let classes = organisation.classes;
-    let clas = classes.find(e=>{return e.name == className})
-    if(clas == null){
-        return{code:404,error:"Class Not Found"};
+    let tutors = organisation.tutors
+    if (classes.find(e => { return e.name == objectName })) {
+        let clas = classes.find(e=>{return e.name == objectName})
+        if(clas == null){
+            return{code:404,error:"Class Not Found"};
+        }
+        let subjects = clas.subjects;
+        if(subjects.find(e=>{return e.name == hourName})){
+            if(timetable[objectName] == null){
+                timetable[objectName] = {};
+            }
+            if(timetable[objectName][`day${day}`] == null){
+                timetable[objectName][`day${day}`] = {};
+            }
+            timetable[objectName][`day${day}`][`hour${hour}`] = hourName
+            clas.subjects.find(e => e.name == hourName).tutors.forEach(tutor => {
+                timetable[tutor][`day${day}`][`hour${hour}`] = clas.name
+            })
+            fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
+            return{
+                code : 200, message : "Hour Set"
+            }
+        }
+        else{
+            return{code:404,error:"Subject Not Found"}
+        }   
     }
-    let subjects = clas.subjects;
-    if(subjects.find(e=>{return e.name == hourName})){
-        if(timetable[className] == null){
-            timetable[className] = {};
+    else if (tutors.find(tutor => tutor.name == objectName)) {
+        let clas = classes.find(room => room.name == hourName)
+        if (clas == null) return { error: "Class Not Found" }
+        return {
+            error : "Cant set Hour for Tutor specified object due to conflict"
         }
-        if(timetable[className][`day${day}`] == null){
-            timetable[className][`day${day}`] = {};
+    }
+    else {
+        return{error:"Invalid Object Parsed"}
+    }
+}
+// console.log(setHour("ksr","Praveen",1,1,"TAM"));
+var deleteHour = (organisationName, objectName, day, hour) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    let timetable = organisation.timetable;
+    let classes = organisation.classes;
+    let tutors = organisation.tutors;
+    if (classes.find(e => { return e.name == objectName })) {
+        let clas = classes.find(e=>{return e.name == objectName})
+        let subjectName = timetable[objectName][`day${day}`][`hour${hour}`];
+        if (subjectName != null) {
+            clas.subjects.find(subject => subject.name == subjectName).tutors.forEach(tutor => {
+                timetable[tutor][`day${day}`][`hour${hour}`] = null
+            })
         }
-        timetable[className][`day${day}`][`hour${hour}`] = hourName
+        timetable[objectName][`day${day}`][`hour${hour}`] = null
         fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
         return{
-            code : 200, message : "Hour Set"
+            code : 200, message : "Hour Deleted"
+        }   
+    }
+    else if (tutors.find(e => { return e.name == objectName })) {
+        let tutor = tutors.find(e => e.name == objectName)
+        let className = timetable[objectName][`day${day}`][`hour${hour}`];
+        if (className != null) {
+            let clas = classes.find(e => { return e.name == className })
+            let subjectName = timetable[clas.name][`day${day}`][`hour${hour}`];
+            clas.subjects.find(e => e.name == subjectName).tutors.forEach(tutor => {
+                timetable[tutor][`day${day}`][`hour${hour}`] = null
+            })
+            timetable[className][`day${day}`][`hour${hour}`] = null   
         }
+        fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`, JSON.stringify(timetable))
+        return{
+            code : 200, message : "Hour Deleted"
+        }   
     }
-    else{
-        return{code:404,error:"Subject Not Found"}
-    }
-}
-var deleteHour = (organisationName, className, day, hour) => {
-    let organisation = getOrganisations(organisationName);
-    if(organisation.code && organisation.code == 2){
-        return organisation
-    }
-    let timetable = organisation.timetable;
-    let classes = organisation.classes;
-    let clas = classes.find(e=>{return e.name == className})
-    if(clas == null){
-        return{code:404,error:"Class Not Found"};
-    }
-    let subjects = clas.subjects;
-    timetable[className][`day${day}`][`hour${hour}`] = null
-    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
-    return{
-        code : 200, message : "Hour Deleted"
+    else {
+        return{code:404,error:"Class or Tutor Parsed is Not Found"};
     }
 }
+
 var setSubject = (organisationName , subjects) => {
     let organisation = getOrganisations(organisationName);
     if(organisation.code && organisation.code == 2){
@@ -300,7 +343,7 @@ var setTutor = (organisationName , tutors) => {
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.tutors}`,JSON.stringify(tutors))
 }
-var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {
+var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {p
     let organisation = getOrganisations(organisationName)
     tutorName = tutorName.trim();
     if(organisation.error){
@@ -331,6 +374,7 @@ var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) =
         return x < y ? -1 : x > y ? 1 : 0;
     });
     setTutor(organisationName, tutors);
+    initializeTimetable("ksr")
     return {
         code : 200, message : "Tutor Added"
     };
@@ -428,7 +472,9 @@ var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,
     if(value == false && subject.tutors.includes(tutorName)){
         subject.tutors = subject.tutors.filter(tutor => tutor != tutorName);
     }
-    setClass(organisationName,classes);
+    setClass(organisationName, classes);
+    updateSubjectsTutors(organisation.name)
+    updateTutorsSubjects(organisation.name)
     tutors = getTutorFullDetails(organisation.name);
     tutor = tutors.find(tutor => {return tutor.name == tutorName})
     if(tutor.availableHours < 0){
@@ -441,6 +487,50 @@ var editSubjectTutorOfClass = (organisationName,className,subjectName,tutorName,
             code: 200, message: `${tutorName} Assigned to ${subjectName} for ${className}`
         }
     }
+}
+function updateTutorsSubjects(organName) {
+    let organ = getOrganisations(organName);
+    if(organ.error)return organ
+    let classes = organ.classes
+    let subjects = organ.subjects
+    let tutors = organ.tutors
+    tutors.forEach(tutor => {
+        tutor.subjects = []
+        classes.forEach(room => {
+            room.subjects.forEach(subject => {
+                subject.tutors.forEach(subTutor => {
+                    if (tutor.name == subTutor) {
+                        if (!tutor.subjects.includes(subject.name)) {
+                            tutor.subjects.push(subject.name)
+                        }
+                    }
+                })
+            })
+        })
+    })
+    setTutor(organName,tutors)
+}
+function updateSubjectsTutors(organName) {
+    let organ = getOrganisations(organName);
+    if(organ.error)return organ
+    let classes = organ.classes
+    let subjects = organ.subjects
+    let tutors = organ.tutors
+    subjects.forEach(subject => {
+        subject.tutors = []
+        classes.forEach(room => {
+            room.subjects.forEach(roomSubjects => {
+                if (roomSubjects.name == subject.name) {
+                    roomSubjects.tutors.forEach(tutor => {
+                        if (!subject.tutors.includes(tutor)) {
+                            subject.tutors.push(tutor)
+                        }
+                    })
+                }
+            })
+        })
+    })
+    setSubject(organName, subjects)
 }
 var getTutorFullDetails = (organisationName) => {
     let organisation = getOrganisations(organisationName)
@@ -465,6 +555,55 @@ var getTutorFullDetails = (organisationName) => {
     })
     return tutors
 }
+var initializeTimetable = (organisationName) => {
+    let organisation = getOrganisations(organisationName)
+    if(organisation.error){
+        return organisation
+    }
+    let timetable = organisation.timetable;
+    let classes = organisation.classes;
+    let tutors = organisation.tutors;
+    classes.forEach(room => {
+        if(timetable[room.name] == null){
+            timetable[room.name] = {};
+        }
+        for(let i=1; i<=organisation.general.daysPerWeek; i++){
+            if(timetable[room.name][`day${i}`] == null){
+                timetable[room.name][`day${i}`] = {}
+                for(let j=1; j<=organisation.general.hoursPerDay; j++){
+                    if(timetable[room.name][`day${i}`][`hour${j}`] == null){
+                        timetable[room.name][`day${i}`][`hour${j}`] = null
+                    }
+                }
+            }
+        }
+    })
+    tutors.forEach(tutor => {
+        if(timetable[tutor.name] == null){
+            timetable[tutor.name] = {};
+        }
+        for(let i=1; i<=organisation.general.daysPerWeek; i++){
+            if(timetable[tutor.name][`day${i}`] == null){
+                timetable[tutor.name][`day${i}`] = {}
+                for(let j=1; j<=organisation.general.hoursPerDay; j++){
+                    if(timetable[tutor.name][`day${i}`][`hour${j}`] == null){
+                        timetable[tutor.name][`day${i}`][`hour${j}`] = null
+                    }
+                }
+            }
+        }
+    })
+    setTimeTable(organisationName,timetable)
+}
+var setTimeTable = (organisationName,timetable) => {
+    let organisation = getOrganisations(organisationName);
+    if(organisation.code && organisation.code == 2){
+        return organisation
+    }
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
+}
+
+
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
 module.exports.deleteOrganisation = deleteOrganisation;
@@ -477,24 +616,11 @@ module.exports.setHour = setHour;
 module.exports.deleteHour = deleteHour;
 module.exports.addSubject = addSubject;
 module.exports.addTutor = addTutor;
+module.exports.setTutor = setTutor;
 module.exports.editTutorSubject = editTutorSubject;
 module.exports.editClassSubject = editClassSubject;
 module.exports.editSubjectTutorOfClass = editSubjectTutorOfClass;
 module.exports.getTutorFullDetails = getTutorFullDetails;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -529,4 +655,18 @@ function script2(){
         })
     })
     console.log(setSubject("ksr",subjects))
+}
+
+function script3() {
+    let organ = getOrganisations("ksr")
+    let tutors = organ.tutors
+    tutors.forEach((tutor,index) => {
+        tutors[index] = {
+            "name": tutor.name,
+            "minimumHours": tutor.minimumHours,
+            "maximumHours": tutor.maximumHours,
+            "subjects": tutor.subjects
+        }
+    })
+    setTutor("ksr",tutors)
 }
