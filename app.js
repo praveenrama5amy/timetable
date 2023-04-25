@@ -285,7 +285,7 @@ app.post("/api/addHour/:organName/:obj/:day/:hour/:value", async (req, res) => {
     }
     res.sendStatus(202)
 })
-
+// console.log(checkConflict("ksr",1,1,"I-BCA-E","PE II"));
 function checkConflict(organName, day, hour, object, subjectName){
     let conflict = false;
     let organisation = getOrganisations(organName);
@@ -325,6 +325,23 @@ function checkConflict(organName, day, hour, object, subjectName){
             }
         }
         if(subjectAlloted >= subject.maximumHours)return { conflict : "Subject Limit Exceeding"}
+        //check tutor availablity
+        let tutorOfHour = classes.find(room => room.name == object).subjects.find(e=> e.name == subject.name).tutors
+        for (const e in timetable) {
+            const element = timetable[e];
+            let subjectName = timetable[e][`day${day}`][`hour${hour}`]
+            if(subjectName == null)continue;
+            let roomOfLoop = classes.find(room => room.name == e)
+            if(roomOfLoop == null)continue;
+            let subjectOfLoopRoom = roomOfLoop.subjects.find(subject => subject.name == subjectName);
+            if(subjectOfLoopRoom == null)continue
+            let tutorsOfSubjectOfLoopRoom = subjectOfLoopRoom.tutors
+            for (const e of tutorsOfSubjectOfLoopRoom) {
+                if(tutorOfHour.includes(e)){
+                    return{conflict : "Tutor Busy"}
+                }
+            }
+        }
     }
     else {
         return {conflict: "Tutor or Class you provided is Invalid"}
