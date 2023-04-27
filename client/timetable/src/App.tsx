@@ -214,7 +214,45 @@ function App() {
         }
 
     }
+    async function sendAddHourRequest({day, hour, value}: {day:number, hour : number, value :String}) {
+        let res = await fetch(`${location}/api/addHour/${response.organisation.name}/${viewAsSelectorSub}/${day}/${hour}/${value}`, { method: "POST" })
+        let resStatus = res.status
+        let conflict;
+        try {
+            conflict = (await res.json())
+        } catch (error) {
 
+        }
+        if (conflict) {
+            return true
+        }
+
+        if (resStatus == 202) {
+            let res: any = { ...response }
+            let organisation: Organisation = res.organisation;
+            let timetable: any = organisation.timetable;
+            let classes = organisation.classes;
+            let tutors = organisation.tutors;
+            if (classes.find(room => room.name == viewAsSelectorSub)) {
+                let room = classes.find(room => room.name == viewAsSelectorSub);
+                let subject = room?.subjects.find(subject => subject.name == value)
+                subject?.tutors.forEach(tutor => {
+                    timetable[tutor][`day${day}`][`hour${hour}`] = room?.name
+                })
+                timetable[viewAsSelectorSub][`day${day}`][`hour${hour}`] = value
+            }
+
+            setResponse(res)
+            setTimeTable(res.organisation.timetable[viewAsSelectorSub])
+        }
+    }
+    async function autoGenerate(){
+        // fetch(`${location}/api/autoGenerate/${response.organisation.name}/${viewAsSelectorSub}`)
+        let conflict;
+        do{
+            
+        }
+    }
     if (loading) return (
         <div className="text-center" style={{ marginTop: "50vh" }}>
             <div className="spinner-border" role="status">
@@ -243,6 +281,7 @@ function App() {
                         <Select options={response.organisation.classes.map(room => room.name)} selected={viewAsSelectorSub} onChange={(e) => { setViewAsSelectorSub(e.target.value) }}></Select>
                         : <Select options={response.organisation.tutors.map(tutor => tutor.name)} selected={viewAsSelectorSub} onChange={(e) => { setViewAsSelectorSub(e.target.value) }}></Select>
                     }
+                    <Button color="dark" onClick={()=>{autoGenerate()}}>Auto Generate</Button>
                 </div>
                 <div className="timetable">
                     {timetable != null &&

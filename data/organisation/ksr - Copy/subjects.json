@@ -3,7 +3,10 @@
         "name": "ACC",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": ["III-BCA-C"],
+        "classes": [
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
             "Balakrishnan"
         ]
@@ -12,19 +15,29 @@
         "name": "AIMS",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
-            "Murukku",
-            "Uma"
+            "Uma",
+            "Sakthivel",
+            "Murukku"
         ]
     },
     {
         "name": "BDA",
         "minimumHours": 5,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "III-BCA-C",
+            "III-BCA-B",
+            "III-BCA-A"
+        ],
         "tutors": [
             "Jeevitha",
+            "Vimala",
             "Uma"
         ]
     },
@@ -32,10 +45,18 @@
         "name": "C++",
         "minimumHours": 3,
         "maximumHours": 3,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
-            "Abirami",
+            "Suresh",
+            "Murukku",
             "Jayabharathi",
+            "Maheshwari",
             "Kousalya"
         ]
     },
@@ -43,9 +64,22 @@
         "name": "C++ PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
+            "Suresh",
+            "Murukku",
+            "Myvizhi",
             "Jayabharathi",
+            "Sathyamoorthi",
+            "Abirami",
+            "Maheshwari",
+            "Balakrishnan",
             "Kousalya"
         ]
     },
@@ -53,58 +87,112 @@
         "name": "CCS",
         "minimumHours": 1,
         "maximumHours": 1,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": []
+    },
+    {
+        "name": "CCS(III)",
+        "minimumHours": 1,
+        "maximumHours": 1,
+        "tutors": [],
+        "classes": [
+            "III-BCA-B",
+            "III-BCA-A",
+            "III-BCA-C"
+        ]
     },
     {
         "name": "COA",
         "minimumHours": 3,
         "maximumHours": 3,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
-            "Bhuma",
-            "Uma"
+            "Uma",
+            "Kousalya",
+            "Arunraja",
+            "Dhanasekaran",
+            "Bhuma"
         ]
     },
     {
         "name": "DM",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
+            "Myvizhi",
             "Arunraja",
-            "Kousalya",
-            "Myvizhi"
+            "Kousalya"
         ]
     },
     {
         "name": "DT PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "I-BCA-E",
+            "I-BCA-D",
+            "I-BCA-C",
+            "I-BCA-B",
+            "I-BCA-A"
+        ],
         "tutors": [
-            "Murukku",
-            "Sathyamoorthi"
+            "Jayapal",
+            "Kousalya",
+            "Maheshwari",
+            "Myvizhi",
+            "Jeevitha",
+            "Bhuma",
+            "Vimala",
+            "Arunraja",
+            "Murukku"
         ]
     },
     {
         "name": "E-COM",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": [
+            "III-BCA-C",
+            "III-BCA-B",
+            "III-BCA-A"
+        ],
         "tutors": [
+            "Vimala",
             "Bhuma",
-            "Sowmya",
-            "Vimala"
+            "Sowmya"
         ]
     },
     {
         "name": "ENG",
         "minimumHours": 4,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
+            "Lavanya",
+            "Ashok",
             "Sabari",
+            "Haripriya",
             "Sharmila"
         ]
     },
@@ -112,9 +200,18 @@
         "name": "EVS",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
+            "Maheshwari",
+            "Vimala",
             "Myvizhi",
+            "Jeeva",
             "Sathyamoorthi"
         ]
     },
@@ -122,55 +219,100 @@
         "name": "IOT",
         "minimumHours": 5,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "III-BCA-A",
+            "III-BCA-B",
+            "III-BCA-C"
+        ],
         "tutors": [
-            "Arunraja",
-            "Sakthivel"
+            "Venkateswaran",
+            "Sakthivel",
+            "Arunraja"
         ]
     },
     {
         "name": "LINUX PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
             "Abirami",
-            "Jayabharathi",
-            "Jayapal",
-            "Maheshwari",
+            "Sathyamoorthi",
             "Myvizhi",
-            "Sathyamoorthi"
+            "Jayabharathi",
+            "Maheshwari",
+            "Jayapal"
+        ]
+    },
+    {
+        "name": "MAD PRAC",
+        "minimumHours": 2,
+        "maximumHours": 2,
+        "tutors": [
+            "Dhanasekaran",
+            "Jeevitha",
+            "Sowmya",
+            "Maheshwari",
+            "Jayapal"
+        ],
+        "classes": [
+            "III-BCA-C",
+            "III-BCA-B",
+            "III-BCA-A"
         ]
     },
     {
         "name": "MAT",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-B",
+            "I-BCA-E"
+        ],
         "tutors": [
-            "Arunraja",
-            "Deepa",
-            "Sujatha"
+            "Ragavan",
+            "Anantharaj",
+            "Sujatha",
+            "Kavitha",
+            "Deepa"
         ]
     },
     {
         "name": "MINI-PRO PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
-            "Murukku",
+            "Uma",
+            "Suresh",
             "Sakthivel",
-            "Uma"
+            "Dhanasekaran",
+            "Murukku"
         ]
     },
     {
         "name": "MT",
         "minimumHours": 5,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "III-BCA-A",
+            "III-BCA-B",
+            "III-BCA-C"
+        ],
         "tutors": [
             "Dhanasekaran",
+            "Sowmya",
             "Jayapal"
         ]
     },
@@ -178,56 +320,136 @@
         "name": "NMEC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": []
     },
     {
         "name": "OS",
         "minimumHours": 5,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "II-BCA-B",
+            "II-BCA-A",
+            "II-BCA-C"
+        ],
         "tutors": [
             "Abirami",
-            "Maheshwari",
-            "Myvizhi"
+            "Myvizhi",
+            "Maheshwari"
         ]
     },
     {
         "name": "PE II",
-        "minimumHours": 3,
-        "maximumHours": 3,
-        "classes": [],
-        "tutors": []
+        "minimumHours": 4,
+        "maximumHours": 4,
+        "classes": [
+            "I-BCA-D",
+            "I-BCA-E",
+            "I-BCA-C",
+            "I-BCA-B",
+            "I-BCA-A"
+        ],
+        "tutors": [
+            "Dhanasekaran",
+            "Jeevitha",
+            "Abirami",
+            "Jayabharathi",
+            "Suresh"
+        ]
+    },
+    {
+        "name": "PLACEMENT",
+        "minimumHours": 2,
+        "maximumHours": 2,
+        "tutors": [
+            "Murukku",
+            "Venkateswaran",
+            "Jeeva"
+        ],
+        "classes": [
+            "III-BCA-C",
+            "III-BCA-B",
+            "III-BCA-A"
+        ]
+    },
+    {
+        "name": "PROJECT",
+        "minimumHours": 4,
+        "maximumHours": 4,
+        "tutors": [
+            "Sowmya",
+            "Murukku",
+            "Sakthivel"
+        ],
+        "classes": [
+            "III-BCA-A",
+            "III-BCA-B",
+            "III-BCA-C"
+        ]
+    },
+    {
+        "name": "R PRAC",
+        "minimumHours": 2,
+        "maximumHours": 2,
+        "tutors": [
+            "Suresh",
+            "Jeevitha",
+            "Vimala",
+            "Kousalya",
+            "Uma"
+        ],
+        "classes": [
+            "III-BCA-A"
+        ]
     },
     {
         "name": "RDBMS",
         "minimumHours": 4,
         "maximumHours": 4,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-B",
+            "II-BCA-C"
+        ],
         "tutors": [
             "Bhuma",
-            "Jayapal",
-            "Sathyamoorthi"
+            "Sathyamoorthi",
+            "Jayapal"
         ]
     },
     {
         "name": "RDBMS PRAC",
         "minimumHours": 2,
         "maximumHours": 2,
-        "classes": [],
+        "classes": [
+            "II-BCA-A",
+            "II-BCA-C",
+            "II-BCA-B"
+        ],
         "tutors": [
-            "Abirami",
             "Bhuma",
             "Jayabharathi",
+            "Sathyamoorthi",
+            "Jeevitha",
             "Jayapal",
-            "Sathyamoorthi"
+            "Abirami"
         ]
     },
     {
         "name": "TAM",
         "minimumHours": 4,
         "maximumHours": 5,
-        "classes": [],
+        "classes": [
+            "I-BCA-A",
+            "I-BCA-B",
+            "I-BCA-C",
+            "I-BCA-D",
+            "I-BCA-E"
+        ],
         "tutors": [
             "Praveen"
         ]

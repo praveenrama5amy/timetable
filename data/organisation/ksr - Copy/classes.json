@@ -1,46 +1,675 @@
 [
     {
         "name": "I-BCA-A",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "C++",
+                "tutors": [
+                    "Suresh"
+                ]
+            },
+            {
+                "name": "C++ PRAC",
+                "tutors": [
+                    "Suresh"
+                ]
+            },
+            {
+                "name": "COA",
+                "tutors": [
+                    "Uma"
+                ]
+            },
+            {
+                "name": "DT PRAC",
+                "tutors": [
+                    "Jayapal",
+                    "Kousalya"
+                ]
+            },
+            {
+                "name": "ENG",
+                "tutors": [
+                    "Lavanya"
+                ]
+            },
+            {
+                "name": "EVS",
+                "tutors": [
+                    "Maheshwari"
+                ]
+            },
+            {
+                "name": "MAT",
+                "tutors": [
+                    "Ragavan"
+                ]
+            },
+            {
+                "name": "PE II",
+                "tutors": [
+                    "Dhanasekaran"
+                ]
+            },
+            {
+                "name": "TAM",
+                "tutors": [
+                    "Praveen"
+                ]
+            }
+        ]
     },
     {
         "name": "I-BCA-B",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "C++",
+                "tutors": [
+                    "Murukku"
+                ]
+            },
+            {
+                "name": "C++ PRAC",
+                "tutors": [
+                    "Murukku",
+                    "Myvizhi"
+                ]
+            },
+            {
+                "name": "COA",
+                "tutors": [
+                    "Kousalya"
+                ]
+            },
+            {
+                "name": "DT PRAC",
+                "tutors": [
+                    "Maheshwari",
+                    "Myvizhi"
+                ]
+            },
+            {
+                "name": "ENG",
+                "tutors": [
+                    "Ashok"
+                ]
+            },
+            {
+                "name": "EVS",
+                "tutors": [
+                    "Vimala"
+                ]
+            },
+            {
+                "name": "MAT",
+                "tutors": [
+                    "Anantharaj"
+                ]
+            },
+            {
+                "name": "PE II",
+                "tutors": [
+                    "Jeevitha"
+                ]
+            },
+            {
+                "name": "TAM",
+                "tutors": [
+                    "Praveen"
+                ]
+            }
+        ]
     },
     {
         "name": "I-BCA-C",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "C++",
+                "tutors": [
+                    "Jayabharathi"
+                ]
+            },
+            {
+                "name": "C++ PRAC",
+                "tutors": [
+                    "Jayabharathi",
+                    "Sathyamoorthi",
+                    "Abirami"
+                ]
+            },
+            {
+                "name": "COA",
+                "tutors": [
+                    "Arunraja"
+                ]
+            },
+            {
+                "name": "DT PRAC",
+                "tutors": [
+                    "Jeevitha",
+                    "Bhuma"
+                ]
+            },
+            {
+                "name": "ENG",
+                "tutors": [
+                    "Sabari"
+                ]
+            },
+            {
+                "name": "EVS",
+                "tutors": [
+                    "Myvizhi"
+                ]
+            },
+            {
+                "name": "MAT",
+                "tutors": [
+                    "Sujatha"
+                ]
+            },
+            {
+                "name": "PE II",
+                "tutors": [
+                    "Abirami"
+                ]
+            },
+            {
+                "name": "TAM",
+                "tutors": [
+                    "Praveen"
+                ]
+            }
+        ]
     },
     {
         "name": "I-BCA-D",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "C++",
+                "tutors": [
+                    "Maheshwari"
+                ]
+            },
+            {
+                "name": "C++ PRAC",
+                "tutors": [
+                    "Maheshwari",
+                    "Suresh"
+                ]
+            },
+            {
+                "name": "COA",
+                "tutors": [
+                    "Dhanasekaran"
+                ]
+            },
+            {
+                "name": "DT PRAC",
+                "tutors": [
+                    "Kousalya",
+                    "Vimala"
+                ]
+            },
+            {
+                "name": "ENG",
+                "tutors": [
+                    "Haripriya"
+                ]
+            },
+            {
+                "name": "EVS",
+                "tutors": [
+                    "Jeeva"
+                ]
+            },
+            {
+                "name": "MAT",
+                "tutors": [
+                    "Kavitha"
+                ]
+            },
+            {
+                "name": "PE II",
+                "tutors": [
+                    "Jayabharathi"
+                ]
+            },
+            {
+                "name": "TAM",
+                "tutors": [
+                    "Praveen"
+                ]
+            }
+        ]
     },
     {
         "name": "I-BCA-E",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "C++",
+                "tutors": [
+                    "Kousalya"
+                ]
+            },
+            {
+                "name": "C++ PRAC",
+                "tutors": [
+                    "Balakrishnan",
+                    "Kousalya"
+                ]
+            },
+            {
+                "name": "COA",
+                "tutors": [
+                    "Bhuma"
+                ]
+            },
+            {
+                "name": "DT PRAC",
+                "tutors": [
+                    "Arunraja",
+                    "Murukku"
+                ]
+            },
+            {
+                "name": "ENG",
+                "tutors": [
+                    "Sharmila"
+                ]
+            },
+            {
+                "name": "EVS",
+                "tutors": [
+                    "Sathyamoorthi"
+                ]
+            },
+            {
+                "name": "MAT",
+                "tutors": [
+                    "Deepa"
+                ]
+            },
+            {
+                "name": "PE II",
+                "tutors": [
+                    "Suresh"
+                ]
+            },
+            {
+                "name": "TAM",
+                "tutors": [
+                    "Praveen"
+                ]
+            }
+        ]
     },
     {
         "name": "II-BCA-A",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "ACC",
+                "tutors": [
+                    "Balakrishnan"
+                ]
+            },
+            {
+                "name": "AIMS",
+                "tutors": [
+                    "Uma"
+                ]
+            },
+            {
+                "name": "CCS",
+                "tutors": []
+            },
+            {
+                "name": "DM",
+                "tutors": [
+                    "Myvizhi"
+                ]
+            },
+            {
+                "name": "LINUX PRAC",
+                "tutors": [
+                    "Abirami",
+                    "Sathyamoorthi"
+                ]
+            },
+            {
+                "name": "MINI-PRO PRAC",
+                "tutors": [
+                    "Uma",
+                    "Suresh"
+                ]
+            },
+            {
+                "name": "NMEC",
+                "tutors": []
+            },
+            {
+                "name": "OS",
+                "tutors": [
+                    "Abirami"
+                ]
+            },
+            {
+                "name": "RDBMS",
+                "tutors": [
+                    "Bhuma"
+                ]
+            },
+            {
+                "name": "RDBMS PRAC",
+                "tutors": [
+                    "Bhuma",
+                    "Jayabharathi"
+                ]
+            }
+        ]
     },
     {
         "name": "II-BCA-B",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "ACC",
+                "tutors": [
+                    "Balakrishnan"
+                ]
+            },
+            {
+                "name": "AIMS",
+                "tutors": [
+                    "Sakthivel"
+                ]
+            },
+            {
+                "name": "CCS",
+                "tutors": []
+            },
+            {
+                "name": "DM",
+                "tutors": [
+                    "Arunraja"
+                ]
+            },
+            {
+                "name": "LINUX PRAC",
+                "tutors": [
+                    "Myvizhi",
+                    "Jayabharathi"
+                ]
+            },
+            {
+                "name": "MINI-PRO PRAC",
+                "tutors": [
+                    "Sakthivel",
+                    "Dhanasekaran"
+                ]
+            },
+            {
+                "name": "NMEC",
+                "tutors": []
+            },
+            {
+                "name": "OS",
+                "tutors": [
+                    "Myvizhi"
+                ]
+            },
+            {
+                "name": "RDBMS",
+                "tutors": [
+                    "Sathyamoorthi"
+                ]
+            },
+            {
+                "name": "RDBMS PRAC",
+                "tutors": [
+                    "Sathyamoorthi",
+                    "Jeevitha"
+                ]
+            }
+        ]
     },
     {
         "name": "II-BCA-C",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "ACC",
+                "tutors": [
+                    "Balakrishnan"
+                ]
+            },
+            {
+                "name": "AIMS",
+                "tutors": [
+                    "Murukku"
+                ]
+            },
+            {
+                "name": "CCS",
+                "tutors": []
+            },
+            {
+                "name": "DM",
+                "tutors": [
+                    "Kousalya"
+                ]
+            },
+            {
+                "name": "LINUX PRAC",
+                "tutors": [
+                    "Maheshwari",
+                    "Jayapal"
+                ]
+            },
+            {
+                "name": "MINI-PRO PRAC",
+                "tutors": [
+                    "Murukku",
+                    "Uma"
+                ]
+            },
+            {
+                "name": "NMEC",
+                "tutors": []
+            },
+            {
+                "name": "OS",
+                "tutors": [
+                    "Maheshwari"
+                ]
+            },
+            {
+                "name": "RDBMS",
+                "tutors": [
+                    "Jayapal"
+                ]
+            },
+            {
+                "name": "RDBMS PRAC",
+                "tutors": [
+                    "Jayapal",
+                    "Abirami"
+                ]
+            }
+        ]
     },
     {
         "name": "III-BCA-A",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "BDA",
+                "tutors": [
+                    "Jeevitha"
+                ]
+            },
+            {
+                "name": "CCS(III)",
+                "tutors": []
+            },
+            {
+                "name": "E-COM",
+                "tutors": [
+                    "Vimala"
+                ]
+            },
+            {
+                "name": "IOT",
+                "tutors": [
+                    "Venkateswaran"
+                ]
+            },
+            {
+                "name": "MAD PRAC",
+                "tutors": [
+                    "Dhanasekaran",
+                    "Jeevitha"
+                ]
+            },
+            {
+                "name": "MT",
+                "tutors": [
+                    "Dhanasekaran"
+                ]
+            },
+            {
+                "name": "PLACEMENT",
+                "tutors": [
+                    "Murukku"
+                ]
+            },
+            {
+                "name": "PROJECT",
+                "tutors": [
+                    "Sowmya"
+                ]
+            },
+            {
+                "name": "R PRAC",
+                "tutors": [
+                    "Suresh",
+                    "Jeevitha"
+                ]
+            }
+        ]
     },
     {
         "name": "III-BCA-B",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "BDA",
+                "tutors": [
+                    "Vimala"
+                ]
+            },
+            {
+                "name": "CCS(III)",
+                "tutors": []
+            },
+            {
+                "name": "E-COM",
+                "tutors": [
+                    "Bhuma"
+                ]
+            },
+            {
+                "name": "IOT",
+                "tutors": [
+                    "Sakthivel"
+                ]
+            },
+            {
+                "name": "MAD PRAC",
+                "tutors": [
+                    "Sowmya",
+                    "Maheshwari"
+                ]
+            },
+            {
+                "name": "MT",
+                "tutors": [
+                    "Sowmya"
+                ]
+            },
+            {
+                "name": "PLACEMENT",
+                "tutors": [
+                    "Venkateswaran"
+                ]
+            },
+            {
+                "name": "PROJECT",
+                "tutors": [
+                    "Murukku"
+                ]
+            },
+            {
+                "name": "R PRAC",
+                "tutors": [
+                    "Vimala",
+                    "Kousalya"
+                ]
+            }
+        ]
     },
     {
         "name": "III-BCA-C",
-        "subjects": []
+        "subjects": [
+            {
+                "name": "BDA",
+                "tutors": [
+                    "Uma"
+                ]
+            },
+            {
+                "name": "CCS(III)",
+                "tutors": []
+            },
+            {
+                "name": "E-COM",
+                "tutors": [
+                    "Sowmya"
+                ]
+            },
+            {
+                "name": "IOT",
+                "tutors": [
+                    "Arunraja"
+                ]
+            },
+            {
+                "name": "MAD PRAC",
+                "tutors": [
+                    "Sowmya",
+                    "Jayapal"
+                ]
+            },
+            {
+                "name": "MT",
+                "tutors": [
+                    "Jayapal"
+                ]
+            },
+            {
+                "name": "PLACEMENT",
+                "tutors": [
+                    "Jeeva"
+                ]
+            },
+            {
+                "name": "PROJECT",
+                "tutors": [
+                    "Sakthivel"
+                ]
+            },
+            {
+                "name": "R PRAC",
+                "tutors": [
+                    "Uma"
+                ]
+            }
+        ]
     }
 ]
