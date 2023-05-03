@@ -602,8 +602,72 @@ var setTimeTable = (organisationName,timetable) => {
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.timetable}`,JSON.stringify(timetable))
 }
-
-
+var createTempTimetable = (organName) => {
+    if(organName == null) throw "Parameter Missing"
+    let organisation = getOrganisations(organName);
+    if (organisation.error) return organisation;
+    if (!fs.readdirSync(`./data/${config.directories.organisations}/${organName}/`).includes(`temp_${config.directories.timetable}`)) {
+        fs.cpSync(`./data/${config.directories.organisations}/${organName}/${config.directories.timetable}`, `./data/${config.directories.organisations}/${organName}/temp_${config.directories.timetable}`)
+        return {
+            success : "File Created"
+        }
+    }
+    else {
+        return {
+            error : "File Already Exists"
+        }
+    }
+}
+var deleteTempTimetable = (organName) => {
+    if(organName == null) throw "Parameter Missing"
+    let organisation = getOrganisations(organName);
+    if (organisation.error) return organisation;
+    if (fs.readdirSync(`./data/${config.directories.organisations}/${organName}/`).includes(`temp_${config.directories.timetable}`)) {
+        fs.unlinkSync(`./data/${config.directories.organisations}/${organName}/temp_${config.directories.timetable}`)
+        return {
+            success : "File Deleted"
+        }
+    }
+    else {
+        return {
+            error : "File Not Exists"
+        }
+    }
+}
+var isHasTemp = (organName) => {
+    if(organName == null) throw "Parameter Missing"
+    let organisation = getOrganisations(organName);
+    if (organisation.error) return organisation;
+    if (fs.readdirSync(`./data/${config.directories.organisations}/${organName}/`).includes(`temp_${config.directories.timetable}`)) {
+        return true
+    }
+    else {
+        return false
+    }
+}
+var swapTempTimetable = (organName) => {
+    if(organName == null) throw "Parameter Missing"
+    let organisation = getOrganisations(organName);
+    if (organisation.error) return organisation;
+    if (!fs.readdirSync(`./data/${config.directories.organisations}/${organName}/`).includes(`temp_${config.directories.timetable}`)) {
+        return {
+            error : "Temp File Not Exists"
+        }
+    }
+    if (!fs.readdirSync(`./data/${config.directories.organisations}/${organName}/`).includes(`${config.directories.timetable}`)) {
+        createMissingFiles(organName)
+    }
+    let timeTable = fs.readFileSync(`./data/${config.directories.organisations}/${organName}/${config.directories.timetable}`, { encoding: "utf-8" })
+    let timeTableTemp = fs.readFileSync(`./data/${config.directories.organisations}/${organName}/temp_${config.directories.timetable}`, { encoding: "utf-8" })
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organName}/temp_${config.directories.timetable}`, timeTable, { encoding: "utf-8" })
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organName}/${config.directories.timetable}`,timeTableTemp,{encoding:"utf-8"})
+}
+var setTimetable = (organName, timetable) => {
+    if(organName == null) throw "Parameter Missing"
+    let organisation = getOrganisations(organName);
+    if (organisation.error) return organisation;
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organName}/${config.directories.timetable}`,JSON.stringify(timetable),{encoding:"utf-8"})
+}
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;
 module.exports.deleteOrganisation = deleteOrganisation;
@@ -621,6 +685,11 @@ module.exports.editTutorSubject = editTutorSubject;
 module.exports.editClassSubject = editClassSubject;
 module.exports.editSubjectTutorOfClass = editSubjectTutorOfClass;
 module.exports.getTutorFullDetails = getTutorFullDetails;
+module.exports.createTempTimetable = createTempTimetable;
+module.exports.deleteTempTimetable = deleteTempTimetable;
+module.exports.isHasTemp = isHasTemp;
+module.exports.swapTempTimetable = swapTempTimetable;
+module.exports.setTimetable = setTimetable;
 
 
 
