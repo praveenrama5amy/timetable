@@ -343,7 +343,7 @@ var setTutor = (organisationName , tutors) => {
     }
     fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.tutors}`,JSON.stringify(tutors))
 }
-var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {p
+var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) => {
     let organisation = getOrganisations(organisationName)
     tutorName = tutorName.trim();
     if(organisation.error){
@@ -362,11 +362,13 @@ var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) =
         subjects : [],
         classes : []
     }
-    subjects.forEach(subject => {
-        if(organisation.subjects.find(e => {return e.name == subject})){
-            data.subjects.push(subject)
-        }
-    })
+    if(subjects != null){
+        subjects.forEach(subject => {
+            if(organisation.subjects.find(e => {return e.name == subject})){
+                data.subjects.push(subject)
+            }
+        })
+    }
     tutors.push(data);
     tutors = tutors.sort(function(a,b) {
         var x = a.name.toLowerCase();
@@ -374,7 +376,7 @@ var addTutor = (organisationName,tutorName,minimumHours,maximumHours,subjects) =
         return x < y ? -1 : x > y ? 1 : 0;
     });
     setTutor(organisationName, tutors);
-    initializeTimetable("ksr")
+    initializeTimetable(organisationName)
     return {
         code : 200, message : "Tutor Added"
     };
@@ -593,6 +595,7 @@ var initializeTimetable = (organisationName) => {
             }
         }
     })
+    console.log(timetable);
     setTimeTable(organisationName,timetable)
 }
 var setTimeTable = (organisationName,timetable) => {

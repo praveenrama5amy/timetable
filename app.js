@@ -105,8 +105,7 @@ app.get("/organisation/:name/tutors",(req,res)=>{
     let tutorName = req.body.name;
     let minimumHours = parseInt(req.body.minimumHours)
     let maximumHours = parseInt(req.body.maximumHours)
-    let subjects = req.body.subjects;
-    res.send(addTutor(organisation.name,tutorName,minimumHours,maximumHours,subjects));
+    res.send(addTutor(organisation.name,tutorName,minimumHours,maximumHours,[]));
 }).post("/organisation/:name/editTutorSubject",(req,res)=>{
     let organisations = getOrganisations()
     if(!organisations.find(e=>{return e.name == req.params.name})){
@@ -424,6 +423,7 @@ function getTutorAvailability(organName) {
 }
 function getSubjectsOfClass(organName, className) {
     let organisation = getOrganisations(organName);
+    console.log(className);;
     if (organisation.error) {
         return organisation;
     }
@@ -774,3 +774,6 @@ function clearPeriodsOfDayOfClass(organisation, className, day) {
     }
     return organisation
 }
+
+
+open(`http://localhost:${config.http}`)

@@ -333,13 +333,13 @@ function App() {
                             <thead>
                                 <tr className="align-middle">
                                     <th scope="col" className="table-dark">Day/ Hour</th>
-                                    {getHoursHeads()?.map(hour => <th scope="col" key={"hour" + hour} className="table-dark">{hour}</th>)}
+                                    {getHoursHeads()?.map(hour => <th scope="col" key={"hour" + hour} className="table-dark tableTitle">{hour}</th>)}
 
                                 </tr>
                             </thead>
                             <tbody>
                                 {getDayOfTimetable()?.map((day, dayIndex) => <tr key={v4()}>
-                                    <th scope="row" className="table-dark">{day}</th>
+                                    <th scope="row" className="table-dark tableTitle">{day}</th>
                                     {getHoursOfTheday(day)?.map((hour, hourIndex) => <td key={day + String(hourIndex)} scope="col">{(hour == null) ?
                                         <>
                                             <Dropdown text="Add" color="secondary" list={getListOfViewer().map((subject: { name: string; }) => {

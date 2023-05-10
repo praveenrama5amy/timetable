@@ -41,3 +41,6 @@ select, option, button{
 .timetable td{
     text-align: center;
 }
+.tableTitle{
+    text-transform: capitalize;
+}

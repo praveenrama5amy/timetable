@@ -1,0 +1,135 @@
+[
+    {
+        "name": "Arun Raja",
+        "minimumHours": 4,
+        "maximumHours": 10,
+        "subjects": [
+            "IOT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Bhuma",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "PROJECT",
+            "E-Com",
+            "R PRAC"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Dhanasekaran",
+        "minimumHours": 5,
+        "maximumHours": 7,
+        "subjects": [
+            "MAD PRAC",
+            "MT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Jayapal",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "PROJECT",
+            "MT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Jeeva",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "CCS",
+            "PLACEMENT",
+            "MAD PRAC"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Jeevitha",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "BDA",
+            "MAD PRAC",
+            "R PRAC"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Kousalya",
+        "minimumHours": 2,
+        "maximumHours": 4,
+        "subjects": [
+            "R PRAC"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Maheshwari",
+        "minimumHours": 2,
+        "maximumHours": 4,
+        "subjects": [
+            "MAD PRAC"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Murugesan",
+        "minimumHours": 2,
+        "maximumHours": 6,
+        "subjects": [
+            "PLACEMENT",
+            "PROJECT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Sakthivel",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "IOT",
+            "PROJECT"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Sowmiya",
+        "minimumHours": 8,
+        "maximumHours": 16,
+        "subjects": [
+            "MAD PRAC",
+            "MT",
+            "E-Com"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Uma",
+        "minimumHours": 8,
+        "maximumHours": 10,
+        "subjects": [
+            "R PRAC",
+            "BDA"
+        ],
+        "classes": []
+    },
+    {
+        "name": "Vimala",
+        "minimumHours": 8,
+        "maximumHours": 15,
+        "subjects": [
+            "E-Com",
+            "BDA",
+            "PROJECT",
+            "R PRAC"
+        ],
+        "classes": []
+    }
+]
