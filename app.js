@@ -15,154 +15,163 @@ const summary = require("./app/summary")
 const tools = require("./app/tools")
 
 
-const config = JSON.parse(fs.readFileSync("./config.json",{encoding:"utf-8"}))
+const config = JSON.parse(fs.readFileSync("./config.json", { encoding: "utf-8" }))
 const organisations = require("./app/organisation")
 const { log, time } = require('console')
 
 // open(`http://localhost:${config.http}`)
 
+
 const app = express()
 app.set("view engine", "ejs")
 
 app.use(json())
-app.use(urlencoded({extended:false}))
+app.use(urlencoded({ extended: false }))
 app.use(text())
 app.use(cors());
 
 app.use(cookieParser())
-const xhttp = http.createServer(app).listen(config.http,()=>{console.log(`Http Server Running on Port : ${config.http}`)})
+const xhttp = http.createServer(app).listen(config.http, () => { console.log(`Http Server Running on Port : ${config.http}`) })
 const xhttps = https.createServer(app).listen(config.https, () => { console.log(`Https Server Running on Port : ${config.https}`) })
 
-app.use("/assets",express.static("assets"))
+app.use("/assets", express.static("assets"))
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     let organisations = getOrganisations()
-    res.render("home",{
+    res.render("home", {
         organisations
     })
+}).get("/api/getOrgans", (req, res) => {
+    let organisations = getOrganisations()
+    res.json(organisations)
+}).get("/api/getOrgan/:name", (req, res) => {
+    if (req.params.name == null) return null
+    let organisation = getOrganisations(req.params.name)
+    console.log(organisation);
+    res.json(organisation)
 })
-app.post("/addOrganisation",(req,res)=>{
+app.post("/addOrganisation", (req, res) => {
     req.body.name = (req.body.name).toLowerCase();
     res.send(createOrganisation(req.body.name));
 })
-app.post("/deleteOrganisation", (req,res)=>{
+app.post("/deleteOrganisation", (req, res) => {
     req.body.name = (req.body.name).toLowerCase();
     res.send(deleteOrganisation(req.body.name));
 })
-app.get("/organisation/:name",(req,res)=>{
+app.get("/organisation/:name", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("organisation",{
-        title : organisation.name
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    res.render("organisation", {
+        title: organisation.name
     })
 })
-app.get("/organisation/:name/classes",(req,res)=>{
+app.get("/organisation/:name/classes", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("classes",{
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    res.render("classes", {
         organisation,
-        classes : organisation.classes,
-        tutors : getTutorFullDetails(organisation.name)
+        classes: organisation.classes,
+        tutors: getTutorFullDetails(organisation.name)
     })
 })
-app.get("/organisation/:name/getTutorsFullDetails",(req,res) => {
+app.get("/organisation/:name/getTutorsFullDetails", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     res.send(getTutorFullDetails(organisation.name))
 })
-app.get("/organisation/:name/tutors",(req,res)=>{
+app.get("/organisation/:name/tutors", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("tutors",{
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    res.render("tutors", {
         organisation,
-        tutors : organisation.tutors,
-        subjects : organisation.subjects
+        tutors: organisation.tutors,
+        subjects: organisation.subjects
     })
-}).post("/organisation/:name/addtutor",(req,res)=>{
+}).post("/organisation/:name/addtutor", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     req.body = JSON.parse(req.body)
     let tutorName = req.body.name;
     let minimumHours = parseInt(req.body.minimumHours)
     let maximumHours = parseInt(req.body.maximumHours)
-    res.send(addTutor(organisation.name,tutorName,minimumHours,maximumHours,[]));
-}).post("/organisation/:name/editTutorSubject",(req,res)=>{
+    res.send(addTutor(organisation.name, tutorName, minimumHours, maximumHours, []));
+}).post("/organisation/:name/editTutorSubject", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     req.body = JSON.parse(req.body)
     let tutorName = req.body.tutorName;
     let subjectName = req.body.subjectName;
     let value = req.body.value;
-    res.send(editTutorSubject(organisation.name,tutorName,subjectName,value))
-    
-}).post("/organisation/:name/editClassSubject",(req,res)=>{
+    res.send(editTutorSubject(organisation.name, tutorName, subjectName, value))
+
+}).post("/organisation/:name/editClassSubject", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     req.body = JSON.parse(req.body)
     let className = req.body.className;
     let subjectName = req.body.subjectName;
     let value = req.body.value;
-    res.send(editClassSubject(organisation.name,className,subjectName,value))
-    
-}).post("/organisation/:name/editSubjectTutorOfClass",(req,res)=>{
+    res.send(editClassSubject(organisation.name, className, subjectName, value))
+
+}).post("/organisation/:name/editSubjectTutorOfClass", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     req.body = JSON.parse(req.body)
     let className = req.body.className;
     let subjectName = req.body.subjectName;
     let tutorName = req.body.tutorName;
     let value = req.body.value;
-    res.send(editSubjectTutorOfClass(organisation.name,className,subjectName,tutorName,value));
+    res.send(editSubjectTutorOfClass(organisation.name, className, subjectName, tutorName, value));
 })
-app.get("/organisation/:name/subjects",(req,res)=>{
+app.get("/organisation/:name/subjects", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     let subjects = [];
     organisation.classes.forEach(room => {
         room.subjects.forEach(subject => {
-            if(subjects.find(sub => {return sub.name == subject.name})){
-                let already = subjects.find((sub,i,a) => {return sub.name == subject.name});
+            if (subjects.find(sub => { return sub.name == subject.name })) {
+                let already = subjects.find((sub, i, a) => { return sub.name == subject.name });
                 already.classes.push(room.name)
-            }else{
+            } else {
                 subjects.push({
-                    name : subject.name,
-                    classes : [room.name],
+                    name: subject.name,
+                    classes: [room.name],
                 })
             }
         })
@@ -172,88 +181,88 @@ app.get("/organisation/:name/subjects",(req,res)=>{
             organisation.subjects.find(sub => sub == subject)
         })
     })
-    res.render("subjects",{
+    res.render("subjects", {
         organisation,
-        classes : organisation.classes,
-        subjects : organisation.subjects,
-        tutors : organisation.tutors
+        classes: organisation.classes,
+        subjects: organisation.subjects,
+        tutors: organisation.tutors
     })
-}).post("/organisation/:name/addsubject",(req,res)=>{
+}).post("/organisation/:name/addsubject", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
+    let organisation = organisations.find(e => { return e.name == req.params.name })
     req.body = JSON.parse(req.body)
     let subjectName = req.body.name;
     let minimumHours = parseInt(req.body.minimumHours)
     let maximumHours = parseInt(req.body.maximumHours)
     let classes = req.body.classes
-    
-    res.send(addSubject(organisation.name,subjectName,minimumHours,maximumHours,[],classes))
+
+    res.send(addSubject(organisation.name, subjectName, minimumHours, maximumHours, [], classes))
 })
-app.get("/organisation/:name/summary",(req,res)=>{
+app.get("/organisation/:name/summary", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
-    res.render("summary",{
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    res.render("summary", {
         organisation,
-        tutors : organisation.tutors,
-        subjects : organisation.subjects,
-        classes : organisation.classes,
-        general : organisation.general,
-        summary : {
-            hours : summary.checkHourAvailability(organisation.name),
-            tutors : summary.checkTutors(organisation.name)
+        tutors: organisation.tutors,
+        subjects: organisation.subjects,
+        classes: organisation.classes,
+        general: organisation.general,
+        summary: {
+            hours: summary.checkHourAvailability(organisation.name),
+            tutors: summary.checkTutors(organisation.name)
         }
     })
 })
-app.post("/organisation/:name/addClass",(req,res)=>{
+app.post("/organisation/:name/addClass", (req, res) => {
     let organisations = getOrganisations()
-    if(!organisations.find(e=>{return e.name == req.params.name})){
+    if (!organisations.find(e => { return e.name == req.params.name })) {
         res.render("organNotFound")
         return;
     }
-    let organisation = organisations.find(e=>{return e.name == req.params.name})
-    if(addClass(req.params.name,req.body.name)){
-        res.send(addClass(req.params.name,req.body.name)).status(403)
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    if (addClass(req.params.name, req.body.name)) {
+        res.send(addClass(req.params.name, req.body.name)).status(403)
     }
-    else{
+    else {
         res.sendStatus(200)
     }
 })
-app.get("/timetable/:name/",async(req,res)=>{
+app.get("/timetable/:name/", async (req, res) => {
     let organisation = getOrganisations(req.params.name)
-    if(organisation.code == 2){
+    if (organisation.code == 2) {
         res.render("organNotFound.ejs");
         return;
     }
-    res.render("timetable",{
+    res.render("timetable", {
         organisation
     })
-}).post("/timetable/setHour",async(req,res)=>{
-    res.send(setHour(req.body.organ,req.body.class,req.body.day,req.body.hour,req.body.hourName))
-}).post("/timetable/deleteHour",async(req,res)=>{
-    res.send(deleteHour(req.body.organ,req.body.class,req.body.day,req.body.hour))
+}).post("/timetable/setHour", async (req, res) => {
+    res.send(setHour(req.body.organ, req.body.class, req.body.day, req.body.hour, req.body.hourName))
+}).post("/timetable/deleteHour", async (req, res) => {
+    res.send(deleteHour(req.body.organ, req.body.class, req.body.day, req.body.hour))
 })
-app.get("/organNotFound",(req,res)=>{
+app.get("/organNotFound", (req, res) => {
     res.render("organNotFound");
 })
 
 
-app.get("/organisation/:name/timetable", async(req,res)=>{
+app.get("/organisation/:name/timetable", async (req, res) => {
     let organisation = getOrganisations(req.params.name);
     if (organisation.error) {
         return res.json(organisation);
     }
     res.render("timetable")
-    
+
 })
-app.get("/api/getTimetable", async(req,res)=>{
+app.get("/api/getTimetable", async (req, res) => {
     let organisation = getOrganisations(req.query.organName);
     if (organisation.error) {
         return res.json(organisation);
@@ -300,7 +309,7 @@ app.put("/api/autoGenerate/:organName/", (req, res) => {
     organisationModule.deleteTempTimetable(organName)
     organisationModule.createTempTimetable(organName)
     let generate = getAutoGenerateTimetable(req.params.organName)
-    organisationModule.setTimetable(organName,generate.timetable)
+    organisationModule.setTimetable(organName, generate.timetable)
     res.json(generate)
 })
 app.put("/api/saveAutoGenerate/:organName/", (req, res) => {
@@ -311,7 +320,7 @@ app.put("/api/saveAutoGenerate/:organName/", (req, res) => {
     }
     organisations.deleteTempTimetable(organName)
     organisation = getOrganisations(organName)
-    res.json({organisation})
+    res.json({ organisation })
 })
 app.delete("/api/autoGenerate/:organName/", (req, res) => {
     let organName = req.params.organName;
@@ -322,15 +331,15 @@ app.delete("/api/autoGenerate/:organName/", (req, res) => {
     organisations.swapTempTimetable(organName)
     organisations.deleteTempTimetable(organName)
     organisation = getOrganisations(organName)
-    res.json({organisation})
+    res.json({ organisation })
 })
 
-function checkConflict(organisation, day, hour, object, subjectName){
+function checkConflict(organisation, day, hour, object, subjectName) {
     let conflict = false;
-    if(organisation == null || object == null || day == null || subjectName == null) throw "Missing Parameter"
+    if (organisation == null || object == null || day == null || subjectName == null) throw "Missing Parameter"
     organisation = (typeof organisation == "object") ? organisation : getOrganisations(organisation)
     if (organisation.error) return organisation;
-    if (organisation == null) return {error : "organisation not found"};
+    if (organisation == null) return { error: "organisation not found" };
     let tutors = organisation.tutors;
     let subjects = organisation.subjects;
     let timetable = organisation.timetable;
@@ -339,7 +348,7 @@ function checkConflict(organisation, day, hour, object, subjectName){
     }
     else if (organisation.classes.find(room => room.name == object)) {
         let room = classes.find(room => room.name == object)
-        if(room == null) return {conflict : "Class Name Invalid"}
+        if (room == null) return { conflict: "Class Name Invalid" }
         //check subject is valid 
         let subject = subjects.find(e => e.name == subjectName)
         if (subject == null) return { conflict: "Subject Name Invalid" }
@@ -363,27 +372,27 @@ function checkConflict(organisation, day, hour, object, subjectName){
                 return { conflict: `Tutor Exceeding Limit` }
             }
         }
-        if(subjectAlloted >= subject.maximumHours)return { conflict : "Subject Limit Exceeding"}
+        if (subjectAlloted >= subject.maximumHours) return { conflict: "Subject Limit Exceeding" }
         //check tutor availablity
-        let tutorOfHour = classes.find(room => room.name == object).subjects.find(e=> e.name == subject.name).tutors
+        let tutorOfHour = classes.find(room => room.name == object).subjects.find(e => e.name == subject.name).tutors
         for (const e in timetable) {
             const element = timetable[e];
             let subjectName = timetable[e][`day${day}`][`hour${hour}`]
-            if(subjectName == null)continue;
+            if (subjectName == null) continue;
             let roomOfLoop = classes.find(room => room.name == e)
-            if(roomOfLoop == null)continue;
+            if (roomOfLoop == null) continue;
             let subjectOfLoopRoom = roomOfLoop.subjects.find(subject => subject.name == subjectName);
-            if(subjectOfLoopRoom == null)continue
+            if (subjectOfLoopRoom == null) continue
             let tutorsOfSubjectOfLoopRoom = subjectOfLoopRoom.tutors
             for (const e of tutorsOfSubjectOfLoopRoom) {
-                if(tutorOfHour.includes(e)){
-                    return{conflict : "Tutor Busy"}
+                if (tutorOfHour.includes(e)) {
+                    return { conflict: "Tutor Busy" }
                 }
             }
         }
     }
     else {
-        return {conflict: "Tutor or Class you provided is Invalid"}
+        return { conflict: "Tutor or Class you provided is Invalid" }
     }
     return conflict
 }
@@ -400,7 +409,7 @@ function getTutorAvailability(organName) {
         tutor.availableHour = tutor.maximumHours
     })
     for (const e in timetable) {
-        if(tutors.find(tutor => tutor.name == e))continue
+        if (tutors.find(tutor => tutor.name == e)) continue
         let room = classes.find(room => room.name == e)
         let object = timetable[e]
         for (const f in object) {
@@ -443,24 +452,24 @@ function getTutorsofSubject(organisation, className, subjectName) {
     return tutorsOfSubject
 }
 function getHourRecurrencyOfDay(organisation, className, day, subjectName) {
-    if(organisation == null || className == null || day == null || subjectName == null) throw "Missing Parameter"
+    if (organisation == null || className == null || day == null || subjectName == null) throw "Missing Parameter"
     organisation = (typeof organisation == "object") ? organisation : getOrganisations(organisation)
     if (organisation.error) return organisation;
-    if (organisation == null) return {error : "organisation not found"};
+    if (organisation == null) return { error: "organisation not found" };
     let timetable = organisation.timetable[className][`day${day}`]
     let recurrency = 0
     for (const e in timetable) {
         const period = timetable[e]
         if (period == subjectName) recurrency += 1
-        if(recurrency >= 2) recurrency *= 1.5
+        if (recurrency >= 2) recurrency *= 1.5
     }
     return recurrency
 }
 function getTutorRecurrencyOfDay(organisation, className, day, subjectName) {
-    if(organisation == null || className == null || day == null || subjectName == null) throw "Missing Parameter"
+    if (organisation == null || className == null || day == null || subjectName == null) throw "Missing Parameter"
     organisation = (typeof organisation == "object") ? organisation : getOrganisations(organisation)
     if (organisation.error) return organisation;
-    if (organisation == null) return {error : "organisation not found"};
+    if (organisation == null) return { error: "organisation not found" };
     let timetable = organisation.timetable[className][`day${day}`]
     let recurrency = 0
     for (const e in timetable) {
@@ -481,13 +490,13 @@ function getTutorContinuity(organisation, className, day, hour, subjectName) {
     organisation = (typeof organisation == "object") ? organisation : getOrganisations(organisation)
     if (organisation.error) return organisation;
     if (organisation == null) return { error: "organisation not found" };
-    let tutorsOfSubject = getTutorsofSubject(organisation, className,subjectName)
+    let tutorsOfSubject = getTutorsofSubject(organisation, className, subjectName)
     let timetable = organisation.timetable
     let priority = 0
     for (const loopClassName in timetable) {
         let previousHour = timetable[loopClassName][`day${day}`][`hour${hour - 1}`]
         let nextHour = timetable[loopClassName][`day${day}`][`hour${hour + 1}`]
-        if(organisation.tutors.find(tutor => tutor.name == loopClassName)) continue
+        if (organisation.tutors.find(tutor => tutor.name == loopClassName)) continue
         if (previousHour != null) {
             let tutorsOfPreviousHour = getTutorsofSubject(organisation.name, loopClassName, previousHour)
             tutorsOfPreviousHour.forEach(tutor => {
@@ -514,7 +523,7 @@ function getTutorBusyAt(organisation, day, hour, tutors) {
     if (organisation == null) return { error: "organisation not found" };
     let timetable = organisation.timetable
     for (const className in timetable) {
-        if(organisation.tutors.find(room => room.name == className))continue
+        if (organisation.tutors.find(room => room.name == className)) continue
         let subjectOfhour = timetable[className][`day${day}`][`hour${hour}`]
         if (subjectOfhour == null) continue;
         let tutorsOfSubjectOfHour = getTutorsofSubject(organisation, className, subjectOfhour)
@@ -525,7 +534,7 @@ function getTutorBusyAt(organisation, day, hour, tutors) {
                     day,
                     hour
                 }
-            }   
+            }
         }
     }
 }
@@ -606,7 +615,7 @@ function getBestPeriodForSpecificHour(organisation, className, day, hour) {
 //                 let hourNumber = parseInt(hourName.slice(4))
 //                 if (hourSubjectName != null) continue;
 //                 let subjectsOfRoom = getSubjectsOfClass(organName, className)
-                
+
 
 //                 for (const subject of subjectsOfRoom) {
 //                     subject.priority = 0;
@@ -696,21 +705,21 @@ function getGeneratedTimetable(organName) {
                 const hourSubjectName = classTimetable[dayName][hourName];
                 let hourNumber = parseInt(hourName.slice(4))
                 if (hourSubjectName != null) continue;
-                let bestSubjectForHour = getBestPeriodForSpecificHour(organisation,className,dayNumber,hourNumber)
+                let bestSubjectForHour = getBestPeriodForSpecificHour(organisation, className, dayNumber, hourNumber)
                 if (bestSubjectForHour.conflict) {
                     console.log(className, dayName, hourName, bestSubjectForHour.name);
                     console.log(bestSubjectForHour.conflict);
-                    conflict = {className,day : dayNumber,hour:hourNumber,subject : bestSubjectForHour.name, conflict : bestSubjectForHour.conflict}
+                    conflict = { className, day: dayNumber, hour: hourNumber, subject: bestSubjectForHour.name, conflict: bestSubjectForHour.conflict }
                 }
-                
+
                 if (bestSubjectForHour.conflict == "Tutor Busy") {
                     let tutorBusyAt = getTutorBusyAt(organisation, dayNumber, hourNumber, bestSubjectForHour.tutors)
                     conflict.tutorBusyAt = tutorBusyAt
                 }
-                if(conflict != null)organisation.conflicts.push(conflict)
+                if (conflict != null) organisation.conflicts.push(conflict)
                 // return bestSubjectForHour
                 if (conflict == null) {
-                    
+
                     organisation.timetable[className][dayName][hourName] = bestSubjectForHour.name
                 }
             }
@@ -730,7 +739,7 @@ function getAppropriateTutorTimetable(organisation) {
         for (const dayName in timetable[className]) {
             for (const hourName in timetable[className][dayName]) {
                 let subjectName = timetable[className][dayName][hourName]
-                if(subjectName == null)continue
+                if (subjectName == null) continue
                 let tutorsOfSubject = getTutorsofSubject(organisation, className, subjectName)
                 tutorsOfSubject.forEach(tutor => {
                     organisation.timetable[tutor][dayName][hourName] = className
@@ -774,6 +783,3 @@ function clearPeriodsOfDayOfClass(organisation, className, day) {
     }
     return organisation
 }
-
-
-open(`http://localhost:${config.http}`)

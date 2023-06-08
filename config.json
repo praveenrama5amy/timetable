@@ -1,13 +1,13 @@
 {
-    "http" : 81,
-    "https" : 443,
-    "directories":{
-        "organisations" : "organisation",
-        "recycleBin":"recycle-bin",
-        "subjects" : "subjects.json",
-        "tutors" : "tutors.json",
-        "classes" : "classes.json",
-        "general" : "general.json",
-        "timetable" : "timetable.json"
+    "http": 8181,
+    "https": 4343,
+    "directories": {
+        "organisations": "organisation",
+        "recycleBin": "recycle-bin",
+        "subjects": "subjects.json",
+        "tutors": "tutors.json",
+        "classes": "classes.json",
+        "general": "general.json",
+        "timetable": "timetable.json"
     }
 }
