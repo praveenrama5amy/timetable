@@ -1,5 +1,11 @@
 export interface Organisation{
-    name : string
+    name: string;
+    classes: Array<Room>;
+    tutors: Array<Tutor>;
+    subjects: Array<Subject>;
+    generalSettings: GeneralSettings;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    timetable : any
 }
 export interface GeneralSettings{
     hoursPerDay: number
@@ -16,13 +22,32 @@ export interface Room{
     name: string
     subjects: Array<{
         name: string,
-        tuttors : [string]
+        tutors : [string]
     }>
 }
 export interface Tutor{
     name: string,
     minimumHours: number,
     maximumHours: number
-    availableHour: number
-    subjects: [string]
+    availableHour: number;
+    allotedHours: number;
+    subjects: [string];
+}
+export interface Summary { 
+    hour: HourSummary;
+    tutors:TutorSummary
+}
+export interface HourSummary{
+    [key: string]: {
+        stat: boolean;
+        reason?: string;
+        count? : number
+    }
+}
+export interface TutorSummary{
+    [key: string]: {
+        stat: boolean;
+        reason?: string;
+        count? : number
+    }
 }

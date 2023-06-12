@@ -13,7 +13,7 @@ import OutlineButton from './assets/components/OutlineButton'
 import Dropdown from "./assets/components/Dropdown"
 
 
-var corsPort = 81;
+var corsPort = 8181;
 var location = `${window.location.protocol}//${window.location.hostname}:${corsPort || window.location.port}`
 let organName = window.location.pathname.split("/")[2];
 declare module globalThis {
@@ -325,6 +325,9 @@ function App() {
                             </SplitButton>
                         </>
                     }
+                    <div style={{ marginLeft: "10px" }}>
+                        <Button color="success" onClick={() => { window.location.assign(`${window.location.protocol}//${window.location.hostname}:${corsPort || window.location.port}/${organName}/print`) }}>Print</Button>
+                    </div>
                 </div>
                 <div className="timetable">
                     {timetable != null &&

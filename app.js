@@ -36,27 +36,145 @@ const xhttps = https.createServer(app).listen(config.https, () => { console.log(
 
 app.use("/assets", express.static("assets"))
 
-app.get("/", (req, res) => {
-    let organisations = getOrganisations()
-    res.render("home", {
-        organisations
-    })
-}).get("/api/getOrgans", (req, res) => {
+
+
+//Api Routes
+app.get("/api/getOrgans", (req, res) => {
     let organisations = getOrganisations()
     res.json(organisations)
-}).get("/api/getOrgan/:name", (req, res) => {
+}).get("/api/getOrgan/:name", async (req, res) => {
     if (req.params.name == null) return null
     let organisation = getOrganisations(req.params.name)
-    console.log(organisation);
-    res.json(organisation)
+    let tutors = await getTutorFullDetails(organisation.name)
+    res.json({
+        ...organisation,
+        tutors
+    })
+}).post("/api/organisation/:name/editSubjectTutorOfClass", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    let className = req.body.className;
+    let subjectName = req.body.subjectName;
+    let tutorName = req.body.tutorName;
+    let value = req.body.value;
+    res.send(editSubjectTutorOfClass(organisation.name, className, subjectName, tutorName, value));
+}).post("/api/organisation/:name/addClass", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    if (addClass(req.params.name, req.body.name)) {
+        res.send(addClass(req.params.name, req.body.name)).status(403)
+    }
+    else {
+        res.sendStatus(200)
+    }
+}).delete("/api/organisation/:name/deleteClass/:className", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    let result = organisationModule.deleteClass(organisation.name, req.params.className)
+    res.json(result)
+}).delete("/api/organisation/:name/deleteTutor/:tutorName", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    let result = organisationModule.deleteTutor(organisation.name, req.params.tutorName)
+    console.log(result);
+    res.json(result)
+}).post("/api/organisation/:name/addtutor", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    let tutors = organisation.tutors
+    let tutorName = req.body.name;
+    let minimumHours = parseInt(req.body.minimumHours)
+    let maximumHours = parseInt(req.body.maximumHours)
+    if (tutors.find(tutor => tutor.name == tutorName)) {
+        res.send(organisationModule.editTutor(organisation.name, tutorName, minimumHours, maximumHours));
+    } else {
+        res.send(addTutor(organisation.name, tutorName, minimumHours, maximumHours, []));
+    }
+}).post("/api/organisation/:name/addsubject", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    let subjectName = req.body.name;
+    let minimumHours = parseInt(req.body.minimumHours)
+    let maximumHours = parseInt(req.body.maximumHours)
+    let classes = req.body.classes
+    res.send(addSubject(organisation.name, subjectName, minimumHours, maximumHours, [], classes))
+}).get("/api/organisation/:name/summary", (req, res) => {
+    let organisations = getOrganisations()
+    if (!organisations.find(e => { return e.name == req.params.name })) {
+        res.render("organNotFound")
+        return;
+    }
+    let organisation = organisations.find(e => { return e.name == req.params.name })
+    res.json({
+        hour: summary.checkHourAvailability(organisation.name),
+        tutors: summary.checkTutors(organisation.name)
+    })
 })
+app.get("/:organName/print", (req, res) => {
+    let organisation = getOrganisations(req.params.organName);
+    if (organisation.error) {
+        return res.redirect("/organNotFound");
+    }
+    organisation.tutors = getTutorFullDetails(organisation.name)
+    res.render('print', {
+        organisation: organisation
+    })
+})
+
+//React Routes
+app.get("/", (req, res) => {
+    res.render("app")
+}).get("/:organName/classes", (req, res) => {
+    res.render("app")
+}).get("/:organName/tutors", (req, res) => {
+    res.render("app")
+}).get("/:organName/subjects", (req, res) => {
+    res.render("app")
+}).get("/:organName/summary", (req, res) => {
+    res.render("app")
+})
+
+
+
+
+
 app.post("/addOrganisation", (req, res) => {
     req.body.name = (req.body.name).toLowerCase();
     res.send(createOrganisation(req.body.name));
 })
-app.post("/deleteOrganisation", (req, res) => {
-    req.body.name = (req.body.name).toLowerCase();
-    res.send(deleteOrganisation(req.body.name));
+app.put("/api/editOrganisation", (req, res) => {
+    let oldName = req.body.oldName
+    let newName = req.body.newName
+    console.log(req.body);
+    res.send(organisationModule.editOrganisationName(oldName, newName));
+})
+app.delete("/api/deleteOrganisation/:name", (req, res) => {
+    let name = (req.params.name);
+    res.send(deleteOrganisation(name));
 })
 app.get("/organisation/:name", (req, res) => {
     let organisations = getOrganisations()

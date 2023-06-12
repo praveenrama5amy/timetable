@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print</title>
+</head>
+<body>
+    <button onclick="printTable()" id="printBtn">Print</button>
+    <% for (const objectName in organisation.timetable) { %> 
+        <h3 style="text-align: center;"><%= objectName %></h3>
+        <center>
+        <table border="1" cellspacing="0" cellpadding="10px">
+            <tr>
+                <% for (const dayName in organisation.timetable[objectName]) { %>
+                    <th></th>
+                    <% for (const hourName in organisation.timetable[objectName][dayName]) { %>
+                        <th><%= hourName %></th>
+                    <% } %>
+                    <% break %>
+                <% } %>
+            </tr>
+            <% for (const dayName in organisation.timetable[objectName]) { %>
+                <tr>
+                    <th><%= dayName %></th>
+                <% for (const hourName in organisation.timetable[objectName][dayName]) { %>
+                    <td><%= organisation.timetable[objectName][dayName][hourName] %></td>
+                <% } %>
+                </tr>
+            <% } %>
+        </table>
+    </center>
+    <% } %>
+    <script>
+        function printTable(){
+            let printBtn = document.querySelector("#printBtn")
+            printBtn.style.display = "none"
+            window.print();
+            setTimeout(()=>{
+                printBtn.style.display = "block"
+            },1000)
+        }
+    </script>
+</body>
+</html>

@@ -12,13 +12,16 @@ const NavBar = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><NavLink to={organName + "/classes"} style={{ textDecoration: "none", color: "inherit" }}>Classes</NavLink></a>
+                            <NavLink to={organName + "/classes"} style={{ textDecoration: "none", color: "inherit" }}>Classes</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><NavLink to={organName + "/tutors"} style={{ textDecoration: "none", color: "inherit" }}>Tutors</NavLink></a>
+                            <NavLink to={organName + "/tutors"} style={{ textDecoration: "none", color: "inherit" }}>Tutors</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><NavLink to={organName + "/subjects"} style={{ textDecoration: "none", color: "inherit" }}>Subjects</NavLink></a>
+                            <NavLink to={organName + "/subjects"} style={{ textDecoration: "none", color: "inherit" }}>Subjects</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to={organName + "/summary"} style={{ textDecoration: "none", color: "inherit" }}>Summary</NavLink>
                         </li>
                     </ul>
                 </div>
