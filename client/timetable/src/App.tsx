@@ -13,7 +13,7 @@ import OutlineButton from './assets/components/OutlineButton'
 import Dropdown from "./assets/components/Dropdown"
 
 
-var corsPort = 8181;
+const corsPort = 8181;
 var location = `${window.location.protocol}//${window.location.hostname}:${corsPort || window.location.port}`
 let organName = window.location.pathname.split("/")[2];
 declare module globalThis {
