@@ -17,5 +17,10 @@
 
 .navbar-nav {
     gap: 10px;
+}
 
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

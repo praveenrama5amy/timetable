@@ -17,9 +17,8 @@ const tools = require("./app/tools")
 
 const config = JSON.parse(fs.readFileSync("./config.json", { encoding: "utf-8" }))
 const organisations = require("./app/organisation")
-const { log, time } = require('console')
 
-// open(`http://localhost:${config.http}`)
+open(`http://localhost:${config.http}`)
 
 
 const app = express()
@@ -92,7 +91,6 @@ app.get("/api/getOrgans", (req, res) => {
     }
     let organisation = organisations.find(e => { return e.name == req.params.name })
     let result = organisationModule.deleteTutor(organisation.name, req.params.tutorName)
-    console.log(result);
     res.json(result)
 }).post("/api/organisation/:name/addtutor", (req, res) => {
     let organisations = getOrganisations()
@@ -162,7 +160,7 @@ app.get("/", (req, res) => {
 
 
 
-app.post("/addOrganisation", (req, res) => {
+app.post("/api/addOrganisation", (req, res) => {
     req.body.name = (req.body.name).toLowerCase();
     res.send(createOrganisation(req.body.name));
 })
@@ -175,6 +173,16 @@ app.put("/api/editOrganisation", (req, res) => {
 app.delete("/api/deleteOrganisation/:name", (req, res) => {
     let name = (req.params.name);
     res.send(deleteOrganisation(name));
+})
+app.put("/api/:organName/changeGeneralSettings", (req, res) => {
+    let daysPerWeek = req.body.daysPerWeek
+    let hoursPerDay = req.body.hoursPerDay
+    if (daysPerWeek == null || hoursPerDay == "" || hoursPerDay == 0 || daysPerWeek == "" || daysPerWeek == null || daysPerWeek == 0) return res.json({ error: "parameter missing" })
+    daysPerWeek = parseInt(daysPerWeek)
+    daysPerWeek = Math.floor(daysPerWeek)
+    hoursPerDay = parseInt(hoursPerDay)
+    hoursPerDay = Math.floor(hoursPerDay)
+    organisationModule.setGeneralSettings(req.params.organName, { daysPerWeek, hoursPerDay })
 })
 app.get("/organisation/:name", (req, res) => {
     let organisations = getOrganisations()

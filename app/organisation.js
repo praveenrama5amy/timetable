@@ -685,7 +685,6 @@ var initializeTimetable = (organisationName) => {
             }
         }
     })
-    console.log(timetable);
     setTimeTable(organisationName, timetable)
 }
 var setTimeTable = (organisationName, timetable) => {
@@ -718,7 +717,6 @@ var removeAllHoursOfTutor = (organName, tutorName) => {
                 const subject = day[hour];
                 const tutorsOfSubject = getTutorOfSubjectOfClass(organName, e, subject)
                 if (tutorsOfSubject.includes(tutorName)) {
-                    console.log(e, f, hour);
                     let dayNumber = parseInt(f.slice(3))
                     let hourNumber = parseInt(hour.slice(4))
                     console.log(deleteHour(organName, e, dayNumber, hourNumber));
@@ -802,6 +800,20 @@ var setTimetable = (organName, timetable) => {
     let organisation = getOrganisations(organName);
     if (organisation.error) return organisation;
     fs.writeFileSync(`./data/${config.directories.organisations}/${organName}/${config.directories.timetable}`, JSON.stringify(timetable), { encoding: "utf-8" })
+}
+
+var setGeneralSettings = (organisationName, { daysPerWeek, hoursPerDay }) => {
+    let organisation = getOrganisations(organisationName);
+    if (organisation.code && organisation.code == 2) {
+        return organisation
+    }
+    let generalSettings = { ...organisation.general, daysPerWeek, hoursPerDay }
+    fs.writeFileSync(`./data/${config.directories.organisations}/${organisationName}/${config.directories.general}`, JSON.stringify(generalSettings))
+    setTimeTable(organisationName, {})
+    initializeTimetable(organisationName)
+}
+module.exports = {
+    setGeneralSettings
 }
 module.exports.createOrganisation = createOrganisation;
 module.exports.getOrganisations = getOrganisations;

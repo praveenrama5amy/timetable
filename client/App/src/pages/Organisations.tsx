@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useNavigate } from "react-router-dom"
 import { Organisation as OrganInterface } from '../Interface'
 import axios from '../api/Axios'
+import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 const Organisation = () => {
     const navigate = useNavigate()
@@ -15,6 +16,16 @@ const Organisation = () => {
     // const preventDefault = async (event: any) => {
     //     event.stopPropagation();
     // }
+    const createOrganisation = async () => {
+        let organName = prompt("Enter New Organisation Name")
+        if (organName == null || organName.trim() == "") return
+        organName = organName.trim()
+        const res = await (await axios.post(`/api/addOrganisation`, { name: organName })).data
+        if (res.resCode == 200) {
+            fetchOrgans()
+        }
+        if (res.error) alert(res.error)
+    }
     const edit = async (organName: string) => {
         const input: HTMLInputElement | null = document.querySelector("#organisationNewName")
         if (input == null) return
@@ -55,6 +66,16 @@ const Organisation = () => {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", backgroundImage: `url(${axios.defaults.baseURL}/assets/images/timetable.jpg)`, backgroundRepeat: "repeat", height: "100%" }}>
             <div className="organisations" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "50px", padding: "10%" }}>
                 <h1 className="uppercase no-margin text-center" style={{ fontFamily: "colonna MT", fontSize: "100px", fontWeight: "400", color: "red", width: "100%", marginTop: "10px" }}>Organisation</h1>
+                <div className="card" style={{ minHeight: "150px", minWidth: "150px" }}>
+                    <div className="card-body" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "70px 100px", cursor: "pointer" }}>
+                        <h5 className="card-title">New</h5>
+                        <p className="card-text"></p>
+                        <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                            {/* <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal" onClick={(e) => { preventDefault(e); setEditField(organ.name) }}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button> */}
+                            <button type="button" className="btn btn-secondary" onClick={() => { createOrganisation() }}><FontAwesomeIcon icon={faAdd}></FontAwesomeIcon></button>
+                        </div>
+                    </div>
+                </div>
                 {organs.map((organ, index) => {
                     return (
                         <div className="card" key={index} style={{ minHeight: "150px", minWidth: "150px" }}>

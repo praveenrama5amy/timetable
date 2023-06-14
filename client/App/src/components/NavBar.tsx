@@ -1,3 +1,5 @@
+import { faBook, faChalkboardTeacher, faGear, faPersonShelter, faPoll } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavLink, useParams } from "react-router-dom"
 
 const NavBar = () => {
@@ -12,16 +14,19 @@ const NavBar = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink to={organName + "/classes"} style={{ textDecoration: "none", color: "inherit" }}>Classes</NavLink>
+                            <NavLink to={organName + "/classes"} style={{ textDecoration: "none", color: "inherit" }}><FontAwesomeIcon icon={faPersonShelter} />Classes</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to={organName + "/tutors"} style={{ textDecoration: "none", color: "inherit" }}>Tutors</NavLink>
+                            <NavLink to={organName + "/tutors"} style={{ textDecoration: "none", color: "inherit" }}><FontAwesomeIcon icon={faChalkboardTeacher} />Tutors</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to={organName + "/subjects"} style={{ textDecoration: "none", color: "inherit" }}>Subjects</NavLink>
+                            <NavLink to={organName + "/subjects"} style={{ textDecoration: "none", color: "inherit" }}><FontAwesomeIcon icon={faBook} />Subjects</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to={organName + "/summary"} style={{ textDecoration: "none", color: "inherit" }}>Summary</NavLink>
+                            <NavLink to={organName + "/summary"} style={{ textDecoration: "none", color: "inherit" }}><FontAwesomeIcon icon={faPoll} />Summary</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to={organName + "/settings"} style={{ textDecoration: "none", color: "inherit" }}><FontAwesomeIcon icon={faGear} /> Settings</NavLink>
                         </li>
                     </ul>
                 </div>

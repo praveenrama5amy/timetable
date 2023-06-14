@@ -1,1 +1,254 @@
-{}
+{
+    "I-BCA-A": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    },
+    "I-BCA-B": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    },
+    "I-BCA-C": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    },
+    "I-BCA-D": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    },
+    "SATHYAMOORTHY": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    },
+    "UMA PARAMESHWARI": {
+        "day1": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day2": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day3": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day4": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        },
+        "day5": {
+            "hour1": null,
+            "hour2": null,
+            "hour3": null,
+            "hour4": null,
+            "hour5": null,
+            "hour6": null
+        }
+    }
+}
